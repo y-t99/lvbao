@@ -2,6 +2,7 @@ package cn.lvbao.index.domain;
 
 import cn.lvbao.index.code.ResultEnum;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -41,24 +42,33 @@ public class Result{
     public Result(){
 
     }
+//--------------------------------查找失败封装开始-------------------------------------//
     public Result(ResultEnum resultEnum){
         this.code=resultEnum.getCode();
     }
+//--------------------------------查找失败封装结束-------------------------------------//
 
-    public Result(ResultEnum resultEnum,String parent,List<String> childrens,String info){
-        this(resultEnum);
-        this.parent=parent;
-        this.childrens=childrens;
-        this.info=info;
-    }
+//--------------------------------查找成功封装开始-------------------------------------//
     public Result(ResultEnum resultEnum,Garbage garbage){
         this(resultEnum);
         this.name=garbage.getName();
         this.category=garbage.getCategory();
         this.parent=garbage.getParent().getName();
-        this.childrens=null;
+        this.childrens=getStrList(garbage.getChildrens());
         this.info=garbage.getInfo();
     }
+
+    private List<String> getStrList(List<Garbage> childrens) {
+        if(childrens==null){
+            return null;
+        }
+        ArrayList<String> list = new ArrayList<>();
+        for(Garbage children:childrens){
+            list.add(children.getName());
+        }
+        return list;
+    }
+//--------------------------------查找成功封装结束-------------------------------------//
     public int getCode() {
         return code;
     }

@@ -64,8 +64,17 @@ public abstract class BaseDao<T> {
             return null;
         }
     }
-
-
+    /**
+     * 查找多条条数据,把信息封装在map中
+     */
+    protected  List<Map<String,Object>> selectListToMap(String sql,
+                                                        Object... args){
+        try {
+            return template.queryForList(sql,args);
+        } catch (DataAccessException e) {
+            return null;
+        }
+    }
 
     /**
      * 查找多条数据
