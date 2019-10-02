@@ -1,6 +1,8 @@
 package cn.lvbao.index.domain;
 
 import cn.lvbao.index.code.ResultEnum;
+import com.alibaba.fastjson.JSONObject;
+import io.netty.handler.codec.json.JsonObjectDecoder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +39,32 @@ public class Result{
      */
     private String info;
 
+    /**
+     * 提示词数量
+     */
+    private int promptNum;
 
+    /**
+     * 查找单词
+     */
+    private List<String> words;
 
     public Result(){
 
     }
-//--------------------------------查找失败封装开始-------------------------------------//
+//--------------------------------搜索词查找失败封装开始-------------------------------------//
     public Result(ResultEnum resultEnum){
         this.code=resultEnum.getCode();
     }
-//--------------------------------查找失败封装结束-------------------------------------//
-
-//--------------------------------查找成功封装开始-------------------------------------//
+//--------------------------------搜索词查找失败封装结束-------------------------------------//
+//--------------------------------提示词查找封装开始-------------------------------------//
+    public Result(ResultEnum resultEnum,int num,List<String> words){
+        this.code=resultEnum.getCode();
+        promptNum=num;
+        this.words=words;
+    }
+//--------------------------------提示词查找封装结束-------------------------------------//
+//--------------------------------搜索词查找成功封装开始-------------------------------------//
     public Result(ResultEnum resultEnum,Garbage garbage){
         this(resultEnum);
         this.name=garbage.getName();
@@ -68,7 +84,7 @@ public class Result{
         }
         return list;
     }
-//--------------------------------查找成功封装结束-------------------------------------//
+//--------------------------------搜索词查找成功封装结束-------------------------------------//
     public int getCode() {
         return code;
     }
@@ -115,6 +131,22 @@ public class Result{
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public int getPromptNum() {
+        return promptNum;
+    }
+
+    public void setPromptNum(int promptNum) {
+        this.promptNum = promptNum;
+    }
+
+    public List<String> getWords() {
+        return words;
+    }
+
+    public void setWords(List<String> words) {
+        this.words = words;
     }
 
     @Override

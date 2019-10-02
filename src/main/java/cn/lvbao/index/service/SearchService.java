@@ -8,5 +8,17 @@ import cn.lvbao.index.domain.Result;
  */
 public interface SearchService {
 
+    /**
+     * 查找垃圾信息
+     * @param keyword
+     * @return
+     */
     Result getKeyMsg(String keyword);
+
+    /**
+     * 查找提示信息
+     * @param word
+     * @return
+     */
+    Result getPromptWord(String word);
 }

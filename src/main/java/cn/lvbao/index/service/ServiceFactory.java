@@ -9,15 +9,15 @@ import cn.lvbao.index.service.impl.SearchServiceImpl;
  * #create 2019-09-22-20:51
  */
 public class ServiceFactory {
-    private static SearchService SEACCH_SERVICE;
+    private static SearchService SEARCH_SERVICE;
     private static SaveService SAVE_SERVICE;
     static {
-        SEACCH_SERVICE=SearchServiceImpl.getInstance();
+        SEARCH_SERVICE=SearchServiceImpl.getInstance();
         SAVE_SERVICE= SaveServiceImpl.getInstance();
     }
 
-    public static SearchService getSeacchService(){
-        return SEACCH_SERVICE;
+    public static SearchService getSearchService(){
+        return SEARCH_SERVICE;
     }
 
     public static  SaveService getSaveService(){

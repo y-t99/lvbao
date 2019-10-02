@@ -33,7 +33,7 @@ public class GarbageDaoImpl extends BaseDao<Garbage> implements GarbageDao {
         //1、查找关键词
         String sql=" SELECT * FROM " +
                 " keyhouse,deschouse " +
-                " WHERE keyhouse.descID=deschouse.descID " +
+                " WHERE keyhouse.k_id=deschouse.d_id " +
                 " and keyword=?";
         Map<String, Object> map = selectOneToMap(sql, keyword);
         //2、判断是否有纪律
@@ -78,11 +78,12 @@ public class GarbageDaoImpl extends BaseDao<Garbage> implements GarbageDao {
         //1、查询父类是对象的记录
         String sql="SELECT keyword FROM " +
                 " keyhouse,deschouse " +
-                " WHERE keyhouse.descID=deschouse.descID " +
-                " and parent=? ";
+                " WHERE keyhouse.k_id=deschouse.d_id " +
+                " and parent=? " +
+                " LIMIT 0,10 ";
         List<Map<String,Object>> maps=selectListToMap(sql,keyword);
         //2、判断是否有记录
-        if (maps==null){
+        if (maps.isEmpty()){
             return null;
         }
         //3、将每天记录封装为垃圾类对象

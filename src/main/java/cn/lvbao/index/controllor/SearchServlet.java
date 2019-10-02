@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 @WebServlet(urlPatterns = {"/searchServlet"})
 public class SearchServlet extends BaseServlet {
-    private SearchService searchService= ServiceFactory.getSeacchService();
+    private SearchService searchService= ServiceFactory.getSearchService();
     private SaveService saveService=ServiceFactory.getSaveService();
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +29,7 @@ public class SearchServlet extends BaseServlet {
         Result result=searchService.getKeyMsg(json.getString("keyword"));
         //3、如果index.Result没有找到信息,把key存到redis中记录
         if(result.getCode()== 402){//没有找到信息
-            saveService.saveKeyword(json.getString("keyword"));
+            //saveService.saveKeyword(json.getString("keyword"));
         }
         //4、把index.Result存到到request中
         req.setAttribute("result",result);
