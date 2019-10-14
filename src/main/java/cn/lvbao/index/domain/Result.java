@@ -38,7 +38,6 @@ public class Result{
      * 查找到的信息
      */
     private String info;
-
     /**
      * 提示词数量
      */
@@ -49,6 +48,10 @@ public class Result{
      */
     private List<String> words;
 
+    /**
+     * 文章简介分页
+     */
+    private PageBean<ArticleBrief> pageBean;
     public Result(){
 
     }
@@ -85,6 +88,12 @@ public class Result{
         return list;
     }
 //--------------------------------搜索词查找成功封装结束-------------------------------------//
+//-------------------------------文章简介分页成功封装开始-------------------------------------//
+    public Result(ResultEnum resultEnum,PageBean<ArticleBrief> pageBean){
+        this.code=resultEnum.getCode();
+        this.pageBean=pageBean;
+    }
+//--------------------------------文章简介分页失败封装开始-------------------------------------//
     public int getCode() {
         return code;
     }
@@ -149,13 +158,26 @@ public class Result{
         this.words = words;
     }
 
+    public PageBean<ArticleBrief> getPageBean() {
+        return pageBean;
+    }
+
+    public void setPageBean(PageBean<ArticleBrief> pageBean) {
+        this.pageBean = pageBean;
+    }
+
     @Override
     public String toString() {
         return "Result{" +
                 "code=" + code +
+                ", name='" + name + '\'' +
+                ", category='" + category + '\'' +
                 ", parent='" + parent + '\'' +
                 ", childrens=" + childrens +
                 ", info='" + info + '\'' +
+                ", promptNum=" + promptNum +
+                ", words=" + words +
+                ", pageBean=" + pageBean +
                 '}';
     }
 }

@@ -13,7 +13,6 @@ import java.io.IOException;
  * @author lvbao
  * #create 2019-09-22-20:54
  */
-@WebFilter(urlPatterns = {"/*"})
 public class RequestFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

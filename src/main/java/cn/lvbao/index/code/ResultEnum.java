@@ -7,11 +7,11 @@ package cn.lvbao.index.code;
  */
 public enum ResultEnum {
     /**
-     * 关键词查找有信息
+     * 找有信息
      */
     HAVE_MESSAGE(200),
     /**
-     * 关键词查找没有信息
+     * 没有信息
      */
     NO_MESSAGE(402)
     ;

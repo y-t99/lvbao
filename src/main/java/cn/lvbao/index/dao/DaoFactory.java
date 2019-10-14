@@ -1,5 +1,6 @@
 package cn.lvbao.index.dao;
 
+import cn.lvbao.index.dao.impl.ArticleBriefDaoImpl;
 import cn.lvbao.index.dao.impl.ESDaoImpl;
 import cn.lvbao.index.dao.impl.GarbageDaoImpl;
 
@@ -14,7 +15,7 @@ public class DaoFactory {
      */
     private static GarbageDao GARBAGE_DAO;
     private static ESDao ES_DAO;
-
+    private static ArticleBriefDao ARTICLE_BRIEF_DAO;
 
     /**
      * 获取各dao的实例
@@ -22,11 +23,15 @@ public class DaoFactory {
     static {
         GARBAGE_DAO= GarbageDaoImpl.getInstance();
         ES_DAO= ESDaoImpl.getInstance();
+        ARTICLE_BRIEF_DAO= ArticleBriefDaoImpl.getInstance();
     }
     public static GarbageDao getGarbageDao(){
         return GARBAGE_DAO;
     }
     public static ESDao getEsDao(){
         return ES_DAO;
+    }
+    public static ArticleBriefDao getArticleBriefDao(){
+        return ARTICLE_BRIEF_DAO;
     }
 }

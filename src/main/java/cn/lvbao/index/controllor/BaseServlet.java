@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 /**
  * @author lvbao
@@ -24,8 +25,9 @@ public abstract class BaseServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1、取出index.Result对象
         Result result = (Result) req.getAttribute("result");
+//        Map result= (Map) req.getAttribute("result");//文本的测试
         PrintWriter out = resp.getWriter();
-        if (result != null) {
+       if (result != null) {
 
             //2、把index.Result对象弄成json对象发给前端
             out.write(JSONObject.toJSONString(result));

@@ -1,6 +1,7 @@
 package cn.lvbao.index.service;
 
 
+import cn.lvbao.index.service.impl.PageServiceImpl;
 import cn.lvbao.index.service.impl.SaveServiceImpl;
 import cn.lvbao.index.service.impl.SearchServiceImpl;
 
@@ -11,9 +12,11 @@ import cn.lvbao.index.service.impl.SearchServiceImpl;
 public class ServiceFactory {
     private static SearchService SEARCH_SERVICE;
     private static SaveService SAVE_SERVICE;
+    private static PageService PAGE_SERVICE;
     static {
         SEARCH_SERVICE=SearchServiceImpl.getInstance();
         SAVE_SERVICE= SaveServiceImpl.getInstance();
+        PAGE_SERVICE= PageServiceImpl.getInstance();
     }
 
     public static SearchService getSearchService(){
@@ -22,5 +25,8 @@ public class ServiceFactory {
 
     public static  SaveService getSaveService(){
         return SAVE_SERVICE;
+
     }
+
+    public static PageService getPageService(){return PAGE_SERVICE;}
 }
