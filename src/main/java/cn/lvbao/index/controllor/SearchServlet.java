@@ -1,6 +1,5 @@
 package cn.lvbao.index.controllor;
 
-import cn.lvbao.controllor.BaseServlet;
 import cn.lvbao.index.domain.Result;
 import cn.lvbao.index.service.SaveService;
 import cn.lvbao.index.service.SearchService;

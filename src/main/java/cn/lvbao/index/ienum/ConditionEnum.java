@@ -1,4 +1,4 @@
-package cn.lvbao.index.code;
+package cn.lvbao.index.ienum;
 
 /**
  * @author yuanyuan

@@ -1,6 +1,5 @@
 package cn.lvbao.index.service;
 
-import cn.lvbao.index.code.ConditionEnum;
 import cn.lvbao.index.domain.ArticleBrief;
 import cn.lvbao.index.domain.PageBean;
 import cn.lvbao.index.domain.Result;

@@ -1,8 +1,6 @@
 package cn.lvbao.index.domain;
 
-import cn.lvbao.index.code.ResultEnum;
-import com.alibaba.fastjson.JSONObject;
-import io.netty.handler.codec.json.JsonObjectDecoder;
+import cn.lvbao.code.ResultEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -169,7 +167,7 @@ public class Result{
     @Override
     public String toString() {
         return "Result{" +
-                "code=" + code +
+                "ienum=" + code +
                 ", name='" + name + '\'' +
                 ", category='" + category + '\'' +
                 ", parent='" + parent + '\'' +

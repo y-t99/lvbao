@@ -1,6 +1,6 @@
 package cn.lvbao.index.dao.impl;
 
-import cn.lvbao.index.code.ConditionEnum;
+import cn.lvbao.index.ienum.ConditionEnum;
 import cn.lvbao.index.dao.ArticleBriefDao;
 import cn.lvbao.index.dao.BaseDao;
 import cn.lvbao.index.domain.ArticleBrief;

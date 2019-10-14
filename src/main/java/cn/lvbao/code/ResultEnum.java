@@ -3,36 +3,21 @@ package cn.lvbao.code;
 /**
  * @author lvbao
  * #create 2019-09-22-19:00
- *
- * 返回给前端的结果
- * 此枚举从定义api得到
+ *  此枚举类为状态码
  */
 public enum ResultEnum {
     /**
-     * 用户账号密码错误
+     * 找有信息
      */
-    USERNAME_PASSWORD_ERROR(401,"用户名或密码错误"),
+    HAVE_MESSAGE(200),
     /**
-     * 用户账号密码为空
+     * 没有信息
      */
-    USERNAME_PASSWORD_EMPTY(402,"用户名、密码不能为空"),
-    /**
-     * 用户未登录
-     */
-    USER_NO_LOGIN_IN(403,"用户未登录"),
-    /**
-     * 用户登录成功
-     */
-    LOING_IN_SUCCESS(200,"登录成功")
+    NO_MESSAGE(402)
     ;
-    /**状态码*/
     private int code;
-    /**信息*/
-    private String msg;
-
-    ResultEnum(int code,String msg){
+    ResultEnum(int code){
         this.code=code;
-        this.msg=msg;
     }
 
     public int getCode() {
@@ -42,11 +27,4 @@ public enum ResultEnum {
     public void setCode(int code) {
         this.code = code;
     }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }}
+}

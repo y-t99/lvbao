@@ -1,6 +1,6 @@
 package cn.lvbao.index.service.impl;
 
-import cn.lvbao.index.code.ResultEnum;
+import cn.lvbao.code.ResultEnum;
 import cn.lvbao.index.dao.DaoFactory;
 import cn.lvbao.index.dao.ESDao;
 import cn.lvbao.index.dao.GarbageDao;
