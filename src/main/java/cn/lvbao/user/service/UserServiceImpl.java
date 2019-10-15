@@ -104,6 +104,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Result checkModifyPwdForm(JSONObject json) {
+        //1、拿到前端表单用户对象
+        User modifyPwdUser=JSONObject.toJavaObject(json, User.class);
+        //2、
         return null;
     }
 
@@ -116,10 +119,10 @@ public class UserServiceImpl implements UserService{
         //2、校验  用户名存在，图片验证码正误与否和密码正误
         if(realUser==null){
             result=new Result(406, "用户名不存在！");
-        }else if(!session.getAttribute("verifyCode").equals(checkedUser.getVerifyCode())){
-            result = new Result(406, "验证码错误！");
         }else if(!checkedUser.getPwd().equals(realUser.getPwd())){
             result = new Result(406, "密码错误！");
+        }else if(!session.getAttribute("verifyCode").equals(checkedUser.getVerifyCode())){
+            result = new Result(406, "验证码错误！");
         }else {
             result = new Result(200, "");
             result.setUser(realUser);
@@ -127,6 +130,8 @@ public class UserServiceImpl implements UserService{
         //3、返回结果
         return result;
     }
+
+
 
 
 

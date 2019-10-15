@@ -45,7 +45,7 @@ public interface UserService {
     Result login(JSONObject json, HttpSession session);
 
     /**
-     * 找回密码——发送验证码到邮箱
+     * 修改密码——发送验证码到邮箱
      *
      * @param json
      * @return
@@ -53,7 +53,7 @@ public interface UserService {
     Result sendModifyPwdMail(JSONObject json);
 
     /**
-     * 验证找回密码的表单（验证码正误、两次密码一致与否
+     * 验证修改密码的表单（验证码正误、两次密码一致与否）
      *
      * @param json
      * @return

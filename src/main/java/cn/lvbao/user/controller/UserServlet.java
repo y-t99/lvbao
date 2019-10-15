@@ -56,6 +56,30 @@ public class UserServlet extends BaseServlet {
         request.setAttribute("result", result);
     }
 
+    /**
+     * 请求发送修改密码的验证码邮件
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
+    public void sendModifyPwdMail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1、获取前端传来的json数据
+        JSONObject json = (JSONObject) request.getAttribute("requestBody");
+        //2、发送邮件
+        Result result = userServiceImpl.sendModifyPwdMail(json);
+        //3、返回结果
+    }
+
+    public void modifyPwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1、获取前端传来的json数据
+        JSONObject json = (JSONObject) request.getAttribute("requestBody");
+        //2、修改密码
+        Result result = userServiceImpl.checkModifyPwdForm(json);
+        //3、返回结果对象
+        request.setAttribute("result", result);
+    }
+
 
 
 
