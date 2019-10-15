@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 //@WebServlet(urlPatterns = "BaseServlet")
@@ -19,7 +20,6 @@ public class BaseServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        super.service(req, resp);
         System.out.println("base___service执行");
 
         //方法分发
@@ -31,8 +31,16 @@ public class BaseServlet extends HttpServlet {
         //3、获取方法对象
         System.out.println("调用我的是："+this);
         try {
-            Method me1=this.getClass().getDeclaredMethod(name);
+            Method me1=this.getClass().getMethod(name,HttpServletRequest.class,HttpServletResponse.class);
+            System.out.println(HttpServletRequest.class);
+            System.out.println(req.getClass());
+//            this.getClass().getMethod(name,req.getClass(),resp.getClass());
+            me1.invoke(this,req,resp);
     } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
             e.printStackTrace();
         }
     }

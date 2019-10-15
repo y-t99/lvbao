@@ -1,19 +1,46 @@
 package cn.lvbao.user.controller;
 
+import cn.lvbao.user.domain.Result;
+import com.alibaba.fastjson.JSONObject;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
-@WebServlet(name = "BaseServlet")
-public class BaseServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+public abstract class BaseServlet extends HttpServlet {
 
-    }
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //1、获取method参数
+        String methodName=req.getParameter("method");
+        Method method=null;
+        System.out.println(methodName);
+        try {
+            method=this.getClass().getMethod(methodName,HttpServletRequest.class,HttpServletResponse.class);
+            System.out.println(methodName);
+            method.invoke(this,req,resp);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1、取出index.Result对象
+        Result result = (Result) req.getAttribute("result");
+        PrintWriter out = resp.getWriter();
+        if (result != null) {
+            //2、把index.Result对象弄成json对象发给前端
+            out.write(JSONObject.toJSONString(result));
+            out.flush();
+            out.close();
 
+        }
     }
 }
