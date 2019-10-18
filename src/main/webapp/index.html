@@ -3,37 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!--js导入-->
     <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/articlePage.js"></script>
+    <!--css样式-->
+    <style>
+
+    </style>
+    <link rel="stylesheet" type="text/css" href="css/articlePage.css"/>
+
 </head>
 <body>
-<form>
-    <input id="keyword" >
-    <input type="button" id="s" value="提交">
-</form>
+<nav>
+    <ul>
+        <li><a id="article-nav" href="#article-position">文章</a></li>
+        <li><a id="review-nav" href="#review-position">评论</a></li>
+    </ul>
+</nav>
+<div class="wrap">
+    <!--文章-->
+    <div class="content-pane">
+        <a id="article-position"></a>
+        <!--文章相关-->
+        <div class="article-about">
+        </div>
+            <!--分隔线-->
+            <hr class="content-line"/>
+            <!--文章主体内容-->
+        <div class="content">
+        </div>
+    </div>
+    <!--个人信息-->
+    <div class="person-pane">
+        <img class="author-portrait" src="123.PNG">
+        <span class="author-name">手艺活</span>
+        <span class="author-motto">一个创意生活在你的眼前</span>
+        <div class="author-a"><a class="author-attent" href="">关注</a><a href="">私信</a></div>
+        <div>
+            <table class="author-info">
+                <tr class="author-info-title">
+                    <td>文章</td>
+                    <td>关注</td>
+                    <td>分类</td>
+                </tr>
+                <tr class="author-num">
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-<script>
-    $(function () {
-        $("#s").click(function () {
-            var data={};
-            var keyword=$("#keyword").val();
-            data["keyword"]=keyword;//json对象
-            $.ajax({
-                url:"http//localhost:8080/searchServlet",
-                type:"POST",
-                data:JSON.stringify(data),
-                contentType:'application/json;charset=UTF-8',
-                success:function (data) {
-                    if(data.code==200){
-                        alert(data.name+"   "+data);
-                    }else if(data.code==402){
-                        alert("没有找到消息");
-                    }
+    <!--评论区-->
+    <div  class="content-pane review-pane">
+        <a id="review-position"></a>
+        <ul id="condition-wrap">
+            <li><a href="javascript:condition('time');" class="condition selected" id="condition-time">按时间排序</a></li>
+            <li><a href="javascript:condition('start');" class="condition " id="condition-start">按点赞排序</a></li>
+        </ul>
+        <!--编辑评论-->
+        <div class="comment-send no-login">
+            <div class="user-face"><img src="123.PNG"></div>
+            <div class="textarea-container">
+                <!--contenteditable="true"-->
+                <div class="textarea">
+                    <div class="login-tip">请先<a class="button login" href="javascript:void(0);">登录</a>后发表评论(・ω・)</div>
+                </div>
+                <a href="javascript:void(0);" class="button send no-send" >发表言论</a>
+            </div>
+            <div class="face-wrap">
+                <a href="javascript:void(0);" class="button face" id="face"><img src="img/face.png"><span>表情</span></a>
+                <div class="emoji-wrap">
+                    <a class="emoji" href="javascript:void(0);"><img title="[微笑]" src="img/emoji/bf3ea8541e1bd469255a907f7b60015ad9abf1ce.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[嫌弃]" src="img/emoji/de4c0783aaa60ec03de0a2b90858927bfad7154b.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[喜欢]" src="img/emoji/8a10a4d73a89f665feff3d46ca56e83dc68f9eb8.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[呆]" src="img/emoji/33ad6000d9f9f168a0976bc60937786f239e5d8c.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[大哭]" src="img/emoji/2caafee2e5db4db72104650d87810cc2c123fc86.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[害羞]" src="img/emoji/9d2ec4e1fbd6cb1b4d12d2bbbdd124ccb83ddfda.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[无语]" src="img/emoji/44667b7d9349957e903b1b62cb91fb9b13720f04.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[委屈]" src="img/emoji/d2f26cbdd6c96960320af03f5514c5b524990840.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[尴尬]" src="img/emoji/cb321684ed5ce6eacdc2699092ab8fe7679e4fda.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[生气]" src="img/emoji/3195714219c4b582a4fb02033dd1519913d0246d.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[奸笑]" src="img/emoji/bb84906573472f0a84cebad1e9000eb6164a6f5a.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[大笑]" src="img/emoji/ca94ad1c7e6dac895eb5b33b7836b634c614d1c0.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[囧]" src="img/emoji/12e41d357a9807cc80ef1e1ed258127fcc791424.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[捂脸]" src="img/emoji/6921bb43f0c634870b92f4a8ad41dada94a5296d.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[阴险]" src="img/emoji/ba8d5f8e7d136d59aab52c40fd3b8a43419eb03c.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[灵魂出窍]" src="img/emoji/43d3db7d97343c01b47e22cfabeca84b4251f35a.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[吐]" src="img/emoji/06946bfe71ac48a6078a0b662181bb5cad09decc.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[抠鼻]" src="img/emoji/cb89184c97e3f6d50acfd7961c313ce50360d70f.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[惊喜]" src="img/emoji/0afecaf3a3499479af946f29749e1a6c285b6f65.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[喜极而泣]" src="img/emoji/485a7e0c01c2d70707daae53bee4a9e2e31ef1ed.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[笑哭]" src="img/emoji/c3043ba94babf824dea03ce500d0e73763bf4f40.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[画风突变]" src="img/emoji/ba4de7a3f97644038b15195bdc9f82a8fd118e77.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[妙啊]" src="img/emoji/b4cb77159d58614a9b787b91b1cd22a81f383535.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[doge]" src="img/emoji/bba7c12aa51fed0199c241465560dfc2714c593e.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[滑稽]" src="img/emoji/d15121545a99ac46774f1f4465b895fe2d1411c3.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[吃瓜]" src="img/emoji/4191ce3c44c2b3df8fd97c33f85d3ab15f4f3c84.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[打call]" src="img/emoji/431432c43da3ee5aab5b0e4f8931953e649e9975.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[偷笑]" src="img/emoji/6c49d226e76c42cd8002abc47b3112bc5a92f66a.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[惊讶]" src="img/emoji/f8e9a59cad52ae1a19622805696a35f0a0d853f3.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[傲娇]" src="img/emoji/010540d0f61220a0db4922e4a679a1d8eca94f4e.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[疼]" src="img/emoji/905fd9a99ec316e353b9bd4ecd49a5f0a301eabf.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[吓]" src="img/emoji/9c10c5ebc7bef27ec641b8a1877674e0c65fea5d.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[点赞]" src="img/emoji/1a67265993913f4c35d15a6028a30724e83e7d35.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[生病]" src="img/emoji/0f25ce04ae1d7baf98650986454c634f6612cb76.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[嘘声]" src="img/emoji/e64af664d20716e090f10411496998095f62f844.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[爱心]" src="img/emoji/ed04066ea7124106d17ffcaf75600700e5442f5c.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[响指]" src="img/emoji/1b5c53cf14336903e1d2ae3527ca380a1256a077.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[支持]" src="img/emoji/3c210366a5585706c09d4c686a9d942b39feeb50.png@56w_56h.png"></a>
+                    <a class="emoji" href="javascript:void(0);"><img title="[黑洞]" src="img/emoji/e90ec4c799010f25391179118ccd9f66b3b279ba.png@56w_56h.png"></a>
+                </div>
+            </div>
+        </div>
+        <hr class="review-line"/>
+        <div id="review">
 
-                }
-            });
-        });
-    });
-</script>
-
+        </div>
+    </div>
+</div>
+<script></script>
 </body>
 </html>

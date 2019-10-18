@@ -25,13 +25,14 @@ public class DaoFactory {
         ES_DAO= ESDaoImpl.getInstance();
         ARTICLE_BRIEF_DAO= ArticleBriefDaoImpl.getInstance();
     }
-    public static GarbageDao getGarbageDao(){
-        return GARBAGE_DAO;
+    public static GarbageDao getGarbageDao(){ 
+        return GARBAGE_DAO; 
     }
     public static ESDao getEsDao(){
         return ES_DAO;
     }
     public static ArticleBriefDao getArticleBriefDao(){
+        
         return ARTICLE_BRIEF_DAO;
     }
 }

@@ -43,18 +43,18 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
         //2、获取map列表,判断排序条件
         int offset=(pageBean.getCurrentPage() - 1)*pageBean.getRows();
         if(ConditionEnum.TIME.equals(condition)) {
-            sql+=" ORDER BY article_sdTime,lvbao_article.`id`  " +
+            sql+=" ORDER BY article_sdTime,lvbao_article.`id` DESC " +
                  " LIMIT ?,? ";
             maps = selectListToMap(sql, offset, pageBean.getRows());
         }else if(ConditionEnum.Start.equals(condition)){
-            sql+=" ORDER BY article_start,lvbao_article.`id`  " +
+            sql+=" ORDER BY article_start,lvbao_article.`id` DESC " +
                  " LIMIT ?,? ";
             maps = selectListToMap(sql, offset, pageBean.getRows());
         }
         //3、将列表map转为articleBrief
         return getList(maps);
     }
-
+    
     private List<ArticleBrief> getList(List<Map<String, Object>> maps) {
         if(maps==null){
             return null;
@@ -72,7 +72,7 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
             brief.setFrom((String) map.get("article_from"));
             brief.setArticletype((String) map.get("articleType_name"));
             brief.setAuthor((String) map.get("loginname"));
-            brief.setCount((Integer) map.get("article_start"));
+            brief.setCount((Integer) map.get("article_click"));
             list.add(brief);
         }
         //3、返回list

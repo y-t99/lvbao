@@ -24,7 +24,9 @@ public class EncodeFilter implements Filter {
         servletRequest.setCharacterEncoding("UTF-8");
         // 2、设置响应编码为UTF-8
         String pathInfo = ((HttpServletRequest) servletRequest).getRequestURI();
-        if(!(pathInfo.contains("html")||pathInfo.contains("css") || pathInfo.contains("js"))) {
+        if(pathInfo.contains("css") ){
+            ((HttpServletResponse) servletResponse).setContentType("text/css;charset=UTF-8");
+        }else if(!(pathInfo.contains("html")|| pathInfo.contains("js"))) {
             ((HttpServletResponse) servletResponse).setContentType("application/json;charset=UTF-8");
         }else{
             ((HttpServletResponse) servletResponse).setContentType("text/html;charset=UTF-8");
