@@ -29,7 +29,7 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
 
     @Override
     public int findArticleBriefCount() {
-        String sql="SELECT count(id) FROM lvbao_article";
+        String sql="SELECT count(article_id) FROM lvbao_article";
         return getCount(sql);
     }
 
@@ -43,11 +43,11 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
         //2、获取map列表,判断排序条件
         int offset=(pageBean.getCurrentPage() - 1)*pageBean.getRows();
         if(ConditionEnum.TIME.equals(condition)) {
-            sql+=" ORDER BY article_sdTime,lvbao_article.`id` DESC " +
+            sql+=" ORDER BY article_sdTime DESC " +
                  " LIMIT ?,? ";
             maps = selectListToMap(sql, offset, pageBean.getRows());
         }else if(ConditionEnum.Start.equals(condition)){
-            sql+=" ORDER BY article_start,lvbao_article.`id` DESC " +
+            sql+=" ORDER BY article_start DESC " +
                  " LIMIT ?,? ";
             maps = selectListToMap(sql, offset, pageBean.getRows());
         }
@@ -73,6 +73,9 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
             brief.setArticletype((String) map.get("articleType_name"));
             brief.setAuthor((String) map.get("loginname"));
             brief.setCount((Integer) map.get("article_click"));
+            brief.setStart((Integer) map.get("article_start"));
+            brief.setCollection((Integer) map.get("article_collection"));
+            brief.setArticleID((String) map.get("article_id"));
             list.add(brief);
         }
         //3、返回list

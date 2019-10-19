@@ -31,7 +31,7 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
     @Override
     public ArticleBean findArticle(String id) {
         //1、查找数据
-        String sql=" SELECT * FROM lvbao_article WHERE id=? ";
+        String sql=" SELECT * FROM lvbao_article WHERE article_id=? ";
         Map<String, Object> map = selectOneToMap(sql, id);
         //2、将查找到的数据封装到AricleBean中并返回
         ArticleBean article=null;

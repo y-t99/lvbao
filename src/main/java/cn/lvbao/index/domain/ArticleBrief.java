@@ -37,6 +37,48 @@ public class ArticleBrief {
      */
     private String author;
 
+    /**
+     *点赞数
+     * @return
+     */
+    private int start;
+
+    /**
+     *收藏数
+     * @return
+     */
+    private int collection;
+
+    /**
+     * 文章id
+     * @return
+     */
+    private String articleID;
+
+    public String getArticleID() {
+        return articleID;
+    }
+
+    public void setArticleID(String articleID) {
+        this.articleID = articleID;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public void setStart(int start) {
+        this.start = start;
+    }
+
+    public int getCollection() {
+        return collection;
+    }
+
+    public void setCollection(int collection) {
+        this.collection = collection;
+    }
+
     public String getTitle() {
         return title;
     }
