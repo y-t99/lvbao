@@ -1,7 +1,7 @@
-package cn.lvbao.user.dao;
+package cn.lvbao.user.dao.impl;
 
+import cn.lvbao.user.dao.UserDao;
 import cn.lvbao.user.domain.User;
-import cn.lvbao.user.util.CommonUtils;
 import cn.lvbao.util.JDBCUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.Map;
@@ -11,11 +11,11 @@ import java.util.Map;
  *@Author: ms
  *@Date: 2019/10/15 14:25
  */
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
     /**
      * 创建由于简化数据库操作代码的JdbcTemplate对象（需获取连接池）
      */
-    private String tabName="user_login";
+    private String tabName="lvbao_user";
     private JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
 
     /**
@@ -25,10 +25,10 @@ public class UserDaoImpl implements UserDao{
     @Override
     public boolean addUser(User user){
         //在用户表中插入传入的用户对象
-        String sql=" INSERT INTO "+tabName+" ( id, name, password, email, status, activationCode ) " +
+        String sql=" INSERT INTO "+tabName+" ( id, loginname, loginpass, email, status, activationCode ) " +
                 " VALUES " +
                 "( ?, ?, ?, ?, ?, ? )";
-        Object[] params={user.getId(),user.getName(),user.getPwd(),
+        Object[] params={user.getId(),user.getLoginname(),user.getLoginpass(),
                 user.getEmail(),user.getStatus(),
                 user.getActivationCode()};
         try {
@@ -47,16 +47,16 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public User queryByName(String name){
-        User user=null;
-        String sql="SELECT * FROM "+tabName+" WHERE name=?";
+        String sql="SELECT * FROM "+tabName+" WHERE loginname=?";
         try{
             Map<String,Object> userMap= template.queryForMap(sql, name);
-            user=CommonUtils.toBean(userMap, User.class);
+            return mapToBean(userMap);
         }catch (Exception e){
             e.printStackTrace();
         }
-        return user;
+        return null;
     }
+
 
     /**
      * 根据邮箱查找用户并返回该条记录
@@ -66,14 +66,43 @@ public class UserDaoImpl implements UserDao{
     @Override
     public User queryByEmail(String email){
         User user=null;
-        String sql="SELECT COUNT(*) FROM "+tabName+" WHERE email=?";
+        String sql="SELECT * FROM "+tabName+" WHERE email=?";
         try{
             Map<String,Object> userMap= template.queryForMap(sql, email);
-            user=CommonUtils.toBean(userMap, User.class);
+            user = mapToBean(userMap);
         } catch (Exception e){
             e.printStackTrace();
         }
         return user;
+    }
+
+
+    /**
+     * 用户修改密码
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean updatePass(long id,String pass) {
+        String sql="UPDATE "+tabName+" SET loginpass=? WHERE id=?";
+        try{
+            template.update(sql, pass,id);
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public boolean isExist(String name) {
+        String sql="SELECT COUNT(*) FROM "+tabName+" WHERE loginname=?";
+        try {
+            int count=template.queryForObject(sql, int.class,name);
+            return count==1;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     /**
@@ -83,10 +112,15 @@ public class UserDaoImpl implements UserDao{
      */
     @Override
     public User queryByCode(String code){
+        User user ;
         String sql="SELECT * FROM "+tabName+" WHERE activationCode=?";
-        Map<String,Object> userMap= template.queryForMap(sql, code);
-        User user=CommonUtils.toBean(userMap, User.class);
-        return user;
+        try{
+            Map<String,Object> userMap= template.queryForMap(sql, code);
+            return mapToBean(userMap);
+        }catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -95,8 +129,8 @@ public class UserDaoImpl implements UserDao{
      * @param status
      */
     @Override
-    public boolean updateStatus(String id, int status){
-        String sql="UPDATE t_user SET status=? WHERE uid=?";
+    public boolean updateStatus(long id, int status){
+        String sql="UPDATE "+tabName+" SET status=? WHERE id=?";
         try{
             template.update(sql, status, id);
             return true;
@@ -105,6 +139,33 @@ public class UserDaoImpl implements UserDao{
             return false;
         }
     }
+
+    /**
+     * 把查询数据库的map结果封装为user对象
+     * @param userMap
+     * @return
+     */
+    private User mapToBean(Map<String,Object> userMap){
+        User user=new User();
+        user.setId((long)userMap.get("id"));
+        user.setLoginname((String)userMap.get("loginname"));
+        user.setLoginpass((String)userMap.get("loginpass"));
+        user.setStatus((long)userMap.get("status"));
+        user.setEmail((String)userMap.get("email"));
+        user.setActivationCode((String)userMap.get("activationCode"));
+        return user;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     public void f( ){
         String sql="";
