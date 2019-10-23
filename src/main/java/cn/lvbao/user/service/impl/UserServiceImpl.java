@@ -92,6 +92,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result login(JSONObject json, HttpSession session) {
+        System.out.println("for git");
         System.out.println("get---"+session.getId());
         System.out.println(session.getAttribute("verifyCode"));
         Result result = null;

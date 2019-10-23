@@ -7,7 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.util.Map;
 
 /**
- *@Description:用户模块持久层实现
+ *@Description:用户模块持久层实现，操作数据库
  *@Author: ms
  *@Date: 2019/10/15 14:25
  */
