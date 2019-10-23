@@ -76,6 +76,7 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
             brief.setStart((Integer) map.get("article_start"));
             brief.setCollection((Integer) map.get("article_collection"));
             brief.setArticleID((String) map.get("article_id"));
+            brief.setImgUri((String)map.get("article_imgURI"));
             list.add(brief);
         }
         //3、返回list

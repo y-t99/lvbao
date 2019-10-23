@@ -3,70 +3,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>随着滚动条滚动的Tab切换</title>
-    <style>* {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        text-decoration: none;
-        font-family: 'Microsoft YaHei';
-    }
-
-    li {
-        width: 100px;
-        height: 50px;
-        line-height: 50px;
-        float: left;
-        border-right: 2px solid #eee;
-        text-align: center;
-        cursor: pointer;
-    }
-
-    ul {
-        width: 1200px;
-        margin: 0 auto;
-    }
-
-    .nav {
-        height: 52px;
-        width: 100%;
-        background: #f5f5f5;
-    }
-
-    .nav .cur {
-        background: #fff;
-        border-top: 2px solid #1a92cf;
-        color: #1a92cf;
-    }
-
-    .fixed {
-        position: fixed;
-        top: 0;
-        left: 0;
-    }
-
+    <title>xss简单测试</title>
+    <!--jq导入-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <style>
     a {
         color: #505050;
-    }</style>
+    }
+    #content-pane{
+        width: 200px;
+        height: 200px;
+        color: white;
+        background-color: black;
+    }
+    </style>
 </head>
 <body>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_1.jpg"></div>
-<p>简单又有趣的铁罐改造利用，把它做成精美的花盆! 不需要用到常见的材料，只需要拿出一支黑色记号笔，在铁罐表面手绘即可!</p>
-<p>不用太担心，即使你的画画水平很一般。按照下面提供的图案绘制，并不需要精湛的手绘技艺。如果你的手边恰好有铁罐和笔，不妨按照教程做做看!~</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_2.jpg"></div>
-<p>1.先在铁罐的侧面画出大致的分界线，你不需要完全按照上图完成。</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_3.jpg"></div>
-<p>2.然后画上简单的图案，上面的两种画法供大家参考。</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_4.jpg"></div>
-<p>3.开始实际操作。用黑色记号笔画出分隔，不需要追求线条的细节。</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_5.jpg"></div>
-<p>4.然后在其中一个分隔块里画出图案。</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_6.jpg"></div>
-<p>5.每个分隔块里的图案都可以不一样。</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_7.jpg"></div>
-<p>6.顶部和底部不需要手绘。一个漂亮的手绘花盆DIY完成了!</p>
-<div class="img_wrap"><img src="img/EC641B3954D54A728ADA0CBAA319DE96_8.jpg"></div>
-<p>7.移栽植物，看上去是不是很漂亮? 不需要花一分钱~</p>
+    <!--&lt;!&ndash;留言板&ndash;&gt;-->
+    <!--<div id="content-pane" contenteditable="true">-->
 
+    <!--</div>-->
+    <!--<a id="send" href="javascript:void(0);">发送</a>-->
+    <!--&lt;!&ndash;消息板&ndash;&gt;-->
+    <!--<div id="revice-pane">-->
+
+    <!--</div>-->
+    <!--<script>-->
+        <!--$("#send").click(function () {-->
+            <!--// let str=$("#content-pane").text();-->
+            <!--let str=$('#content-pane').html();-->
+            <!--console.log(str);-->
+            <!--$("#revice-pane").html(str);-->
+        <!--});-->
+    <!--</script>-->
+    <!--//f.us.sinaimg.cn/000DMs3Qlx07t5xDX9Ec01041200xk380E010.mp4?label=mp4_hd&template=852x480.27.0&Expires=1571823889&ssig=VBpN7phOIU&KID=unistore,video-->
+    <video id="" class=" " controls preload="none" width="640" height="264"  poster="http://vjs.zencdn.net/v/oceans.png">
+        <source src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+    </video>
 </body>
 </html>

@@ -55,6 +55,12 @@ public class ArticleBrief {
      */
     private String articleID;
 
+    /**
+     * 简介图片地址
+     * @return
+     */
+    private String imgUri;
+
     public String getArticleID() {
         return articleID;
     }
@@ -133,5 +139,13 @@ public class ArticleBrief {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getImgUri() {
+        return imgUri;
+    }
+
+    public void setImgUri(String imgUri){
+        this.imgUri = imgUri;
     }
 }

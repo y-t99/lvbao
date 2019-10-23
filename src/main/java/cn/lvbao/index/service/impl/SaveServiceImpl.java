@@ -21,14 +21,12 @@ public class SaveServiceImpl implements SaveService {
     }
 
     @Override
-    public void saveKeyword(String keyword) {
+    public void saveKeyword(String keyword,String list) {
         Jedis jedis= JedisUtils.getJedis();
-        if(jedis.get(keyword)==null){
-            jedis.set(keyword,"1");
-        }else{
-            int num= Integer.parseInt(jedis.get(keyword))+1;
-            jedis.set(keyword, String.valueOf(num));
-        }
+        /**
+         * 将关键词保存到榜单中
+         */
+        jedis.zincrby(list,1,keyword);
         jedis.close();
     }
 }
