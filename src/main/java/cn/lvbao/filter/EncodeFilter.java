@@ -28,7 +28,7 @@ public class EncodeFilter implements Filter {
             ((HttpServletResponse) servletResponse).setContentType("text/css;charset=UTF-8");
         }else if(!(pathInfo.contains("html")|| pathInfo.contains("js"))) {
             ((HttpServletResponse) servletResponse).setContentType("application/json;charset=UTF-8");
-        }else{
+        } else{
             ((HttpServletResponse) servletResponse).setContentType("text/html;charset=UTF-8");
         }
         ((HttpServletResponse) servletResponse).setCharacterEncoding("UTF-8");

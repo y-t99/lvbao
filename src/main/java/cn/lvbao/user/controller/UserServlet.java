@@ -1,7 +1,9 @@
 package cn.lvbao.user.controller;
 
 import cn.lvbao.user.domain.Result;
-import cn.lvbao.user.service.UserServiceImpl;
+import cn.lvbao.user.domain.User;
+import cn.lvbao.user.service.UserService;
+import cn.lvbao.user.service.impl.UserServiceImpl;
 import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.ServletException;
@@ -19,13 +21,13 @@ import javax.imageio.ImageIO;
  */
 @WebServlet(urlPatterns = "/user/*")
 public class UserServlet extends BaseServlet {
-    private UserServiceImpl userServiceImpl = new UserServiceImpl();
+    private UserService userService = new UserServiceImpl();
 
     public void getVerifyCode(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1、设置为图片形式
         response.setContentType("image/jpeg");
         //2、获取验证码图片并发送
-        BufferedImage codeImg = userServiceImpl.getVerifyCode(request);
+        BufferedImage codeImg = userService.getVerifyCode(request.getSession());
         ImageIO.write(codeImg, "png", response.getOutputStream());
     }
 
@@ -33,31 +35,40 @@ public class UserServlet extends BaseServlet {
         //1、获取前端传来的json数据
         JSONObject json = (JSONObject) request.getAttribute("requestBody");
         //2、service.addUser json直接作为参数 得到注册结果
-        Result result = userServiceImpl.regist(json);
+        Result result = userService.regist(json,request.getSession());
         //3、注册结果返回前端
         request.setAttribute("result", result);
+
+        System.out.println(result);
     }
 
-    public void acitvate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void activate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1、获取前端传来的json数据
         JSONObject json = (JSONObject) request.getAttribute("requestBody");
+        User user=JSONObject.toJavaObject(json, User.class);
+//        json.put("activationCode", request.getParameter("activationCode"));
         //2、激活用户
-        Result actiResult = userServiceImpl.activate(json);
+        Result actiResult = userService.activate(json);
         //3、结果信息对象封装为json并返回
         request.setAttribute("result", actiResult);
+
+        System.out.println(actiResult);
     }
+
 
     public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1、获取前端传来的json数据
         JSONObject json = (JSONObject) request.getAttribute("requestBody");
         //2、用户登录
-        Result result = userServiceImpl.login(json,request.getSession());
+        Result result = userService.login(json,request.getSession());
         //3、返回结果对象
         request.setAttribute("result", result);
+
+        System.out.println(result);
     }
 
     /**
-     * 请求发送修改密码的验证码邮件
+     * 发送修改密码的验证码邮件
      * @param request
      * @param response
      * @throws ServletException
@@ -67,27 +78,40 @@ public class UserServlet extends BaseServlet {
         //1、获取前端传来的json数据
         JSONObject json = (JSONObject) request.getAttribute("requestBody");
         //2、发送邮件
-        Result result = userServiceImpl.sendModifyPwdMail(json);
+        Result result = userService.sendModifyPwdMail(json,request.getSession());
         //3、返回结果
+        request.setAttribute("result", result);
+
+        System.out.println(result);
     }
 
-    public void modifyPwd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void checkMailCodeServlet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //1、获取前端传来的json数据
         JSONObject json = (JSONObject) request.getAttribute("requestBody");
         //2、修改密码
-        Result result = userServiceImpl.checkModifyPwdForm(json);
+        Result result = userService.checkMailVeriCode(json,request.getSession());
         //3、返回结果对象
         request.setAttribute("result", result);
+
+        System.out.println(result);
     }
 
-
-
-
-
-
-    public void f(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("f!!");
+    public void modifyPass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //1、获取前端传来的json数据
+        JSONObject json = (JSONObject) request.getAttribute("requestBody");
+        //2、修改密码
+        Result result = userService.modifyPass(json,request.getSession());
+        //3、返回结果对象
+        request.setAttribute("result", result);
+        System.out.println(result);
     }
 
+    public void f1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("f1---"+request.getSession().getId());;
+    }
+
+    public void f2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("f2---"+request.getSession().getId());;
+    }
 
 }

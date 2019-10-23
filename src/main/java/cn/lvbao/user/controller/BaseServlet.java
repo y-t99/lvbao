@@ -19,10 +19,8 @@ public abstract class BaseServlet extends HttpServlet {
         //1、获取method参数
         String methodName=req.getParameter("method");
         Method method=null;
-        System.out.println(methodName);
         try {
             method=this.getClass().getMethod(methodName,HttpServletRequest.class,HttpServletResponse.class);
-            System.out.println(methodName);
             method.invoke(this,req,resp);
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
@@ -30,17 +28,20 @@ public abstract class BaseServlet extends HttpServlet {
             e.printStackTrace();
         } catch (InvocationTargetException e) {
             e.printStackTrace();
+        } catch (Exception e){
+            e.printStackTrace();
         }
-
-        //1、取出index.Result对象
+        if(methodName.equals("getVerifyCode")){
+            return;
+        }
+        //1、取出user.Result对象
         Result result = (Result) req.getAttribute("result");
         PrintWriter out = resp.getWriter();
         if (result != null) {
-            //2、把index.Result对象弄成json对象发给前端
+            //2、把user.Result对象弄成json对象发给前端
             out.write(JSONObject.toJSONString(result));
             out.flush();
             out.close();
-
         }
     }
 }

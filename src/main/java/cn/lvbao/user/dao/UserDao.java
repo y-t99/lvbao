@@ -3,9 +3,7 @@ package cn.lvbao.user.dao;
 import cn.lvbao.user.domain.User;
 
 /**
- * @Description: 用户模块dao层接口
- * @Author: ms
- * @Date: 2019/10/11 14:10
+ * 用户模块dao层接口
  */
 public interface UserDao {
     /**
