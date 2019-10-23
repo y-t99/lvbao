@@ -1,21 +1,21 @@
 review={
-    'id':'32CE4F5475634AA8A81381EDA135A4A5',
+    'id':'EC641B3954D54A728ADA0CBAA319DE96',
     "rows":2,
     "currentPage":1,
     "condition":"time"
 };
 //请求文章
 article={
-    'id':'32CE4F5475634AA8A81381EDA135A4A5'
+    'id':'EC641B3954D54A728ADA0CBAA319DE96'
 };
 // EC641B3954D54A728ADA0CBAA319DE96
 window.onload=function(){
-    /*
-     *地址栏获取参数
-     */
-    let articltID=getUrlParam("id");
-    article.id=  articltID;
-    review.id=articltID;
+    // /*
+    //  *地址栏获取参数
+    //  */
+    // let articltID=getUrlParam("id");
+    // article.id=  articltID;
+    // review.id=articltID;
 
     /*
      *表情包
@@ -61,13 +61,13 @@ window.onload=function(){
 /**
  * 获取地址参数
  */
-function getUrlParam(name){
-    var reg=new RegExp('(^|&)'+name+'=([^&]*)(&|$)');
-    var result=window.location.search.substr(1).match(reg);
-    console.log(result);
-    console.log(result[2]);
-    return result ? decodeURIComponent(result[2]):null;
-}
+// function getUrlParam(name){
+//     var reg=new RegExp('(^|&)'+name+'=([^&]*)(&|$)');
+//     var result=window.location.search.substr(1).match(reg);
+//     console.log(result);
+//     console.log(result[2]);
+//     return result ? decodeURIComponent(result[2]):null;
+// }
 /**
  * 评论区请求
  * @param review

@@ -27,8 +27,10 @@ public class SearchServlet extends BaseServlet {
         //2、进行查找信息业务逻辑,并返回index.Result
         Result result=searchService.getKeyMsg(json.getString("keyword"));
         //3、如果index.Result没有找到信息,把key存到redis中记录
-        if(result.getCode()== 402){//没有找到信息
-            //saveService.saveKeyword(json.getString("keyword"));
+        if(result.getCode()== 402){//没有找到信息,保存到miss榜单中
+            saveService.saveKeyword(json.getString("keyword"),"miss");
+        }else{//由找到信息,保存到hotword榜单中。
+            saveService.saveKeyword(result.getName(),"hotword");
         }
         //4、把index.Result存到到request中
         req.setAttribute("result",result);

@@ -7,5 +7,5 @@ package cn.lvbao.index.service;
  */
 public interface SaveService {
 
-    void saveKeyword(String keyword);
+    void saveKeyword(String keyword,String list);
 }

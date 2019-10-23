@@ -98,7 +98,7 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
      * @return
      */
     private List<ReviewBean> fillList(List<Map<String, Object>> maps) {
-        if(maps==null ||maps.isEmpty()){
+        if(maps==null){
             return null;
         }
         List<ReviewBean> list=new ArrayList<>();
