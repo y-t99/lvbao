@@ -1,5 +1,6 @@
 package ms;
 
+import cn.lvbao.user.dao.DaoFactory;
 import cn.lvbao.user.dao.UserDao;
 import cn.lvbao.user.dao.impl.UserDaoImpl;
 import cn.lvbao.user.domain.User;
@@ -64,7 +65,7 @@ public class Test {
 
     private String tabName="lvbao_user";
     private JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
-    private UserDao userDao=new UserDaoImpl();
+    private UserDao userDao= DaoFactory.getUserDao();
 
     @org.junit.Test
     public void test1(){

@@ -1,5 +1,6 @@
 package cn.lvbao.user.service.impl;
 
+import cn.lvbao.user.dao.DaoFactory;
 import cn.lvbao.user.dao.UserDao;
 import cn.lvbao.user.dao.impl.UserDaoImpl;
 import cn.lvbao.user.domain.Result;
@@ -19,7 +20,7 @@ import java.awt.image.BufferedImage;
  *@Date: 2019/10/15 14:25
  */
 public class UserServiceImpl implements UserService {
-    private UserDao userDao =new UserDaoImpl();
+    private UserDao userDao = DaoFactory.getUserDao();
     private String activateMail1=
             "<html><head></head><body>" +
             "<h1>这是一封激活邮件,激活请点击以下链接</h1>" +

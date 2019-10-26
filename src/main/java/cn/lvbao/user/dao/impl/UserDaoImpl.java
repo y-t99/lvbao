@@ -13,6 +13,13 @@ import java.util.Map;
  */
 public class UserDaoImpl implements UserDao {
     /**
+     * 缺省,只有同个包下的类才能使用
+     */
+    UserDaoImpl(){
+
+    }
+
+    /**
      * 创建由于简化数据库操作代码的JdbcTemplate对象（需获取连接池）
      */
     private String tabName="lvbao_user";

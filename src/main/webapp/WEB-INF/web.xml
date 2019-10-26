@@ -57,10 +57,11 @@
       <param-value>Accept, Origin, X-Requested-With, Content-Type, Last-Modified</param-value>
     </init-param>
 
+
     <init-param>
       <param-name>cors.exposedHeaders</param-name>
       <!--这里可以添加一些自己的暴露Headers   -->
-      <param-value>X-Test-1, X-Test-2</param-value>
+      <param-value>Set-Cookie</param-value>
     </init-param>
 
     <init-param>
@@ -84,4 +85,30 @@
     <!--<servlet-name>default</servlet-name>-->
     <!--<url-pattern>/*</url-pattern>-->
   <!--</servlet-mapping>-->
+
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>default</servlet-name>-->
+    <!--<url-pattern>*.jpg</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>default</servlet-name>-->
+    <!--<url-pattern>*.png</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>default</servlet-name>-->
+    <!--<url-pattern>*.ico</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>default</servlet-name>-->
+    <!--<url-pattern>*.gif</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>default</servlet-name>-->
+    <!--<url-pattern>*.js</url-pattern>-->
+  <!--</servlet-mapping>-->
+  <!--<servlet-mapping>-->
+    <!--<servlet-name>default</servlet-name>-->
+    <!--<url-pattern>*.css</url-pattern>-->
+  <!--</servlet-mapping>-->
+
 </web-app>
