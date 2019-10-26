@@ -90,7 +90,7 @@ public class UserDaoImpl implements UserDao {
      * @return
      */
     @Override
-    public boolean updatePass(long id,String pass) {
+    public boolean updatePass(String id,String pass) {
         String sql="UPDATE "+tabName+" SET loginpass=? WHERE id=?";
         try{
             template.update(sql, pass,id);
@@ -136,7 +136,7 @@ public class UserDaoImpl implements UserDao {
      * @param status
      */
     @Override
-    public boolean updateStatus(long id, int status){
+    public boolean updateStatus(String id, int status){
         String sql="UPDATE "+tabName+" SET status=? WHERE id=?";
         try{
             template.update(sql, status, id);
@@ -154,10 +154,10 @@ public class UserDaoImpl implements UserDao {
      */
     private User mapToBean(Map<String,Object> userMap){
         User user=new User();
-        user.setId((long)userMap.get("id"));
+        user.setId((String) userMap.get("id"));
         user.setLoginname((String)userMap.get("loginname"));
         user.setLoginpass((String)userMap.get("loginpass"));
-        user.setStatus((long)userMap.get("status"));
+        user.setStatus((boolean)userMap.get("status"));
         user.setEmail((String)userMap.get("email"));
         user.setActivationCode((String)userMap.get("activationCode"));
         return user;

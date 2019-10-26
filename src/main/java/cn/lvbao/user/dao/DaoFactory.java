@@ -24,7 +24,6 @@ public class DaoFactory {
             @Override
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
                 String methonName=method.getName();
-
                 /*
                  *  如果为添加新用户,或者更新方法,对密码进行加密
                  */

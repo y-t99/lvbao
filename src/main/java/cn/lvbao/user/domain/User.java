@@ -8,7 +8,7 @@ public class User {
     /**
      * 用户id
      */
-    private long id;
+    private String id;
     /**
      * 用户名
      */
@@ -24,7 +24,7 @@ public class User {
     /**
      * 用户激活状态
      */
-    private long status;
+    private boolean status;
     /**
      * 用户邮箱地址
      */
@@ -38,11 +38,11 @@ public class User {
      */
     private String activationCode;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -70,11 +70,11 @@ public class User {
         this.repass = repass;
     }
 
-    public long getStatus() {
+    public boolean getStatus() {
         return status;
     }
 
-    public void setStatus(long status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 

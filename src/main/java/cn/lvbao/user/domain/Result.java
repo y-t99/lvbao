@@ -9,6 +9,7 @@ public class Result {
     private int code;
     private String msg;
     private User user;
+    private String token;
 
     public Result(){}
 
@@ -47,6 +48,13 @@ public class Result {
                 ",msg="+msg+
                 ",user="+user+
                 "}";
+    }
+
+    public void setToken(String token) {
+        this.token=token;
+    }
+    public String getToken(){
+        return token;
     }
 }
 

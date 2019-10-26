@@ -73,7 +73,7 @@ public class Test {
         Map<String,Object> userMap= template.queryForMap(a);
         System.out.println(userMap);
         User user=new User();
-        user.setId((long)userMap.get("id"));
+        user.setId((String) userMap.get("id"));
         user.setLoginname((String)userMap.get("loginname"));
         user.setLoginpass((String)userMap.get("loginpass"));
         user.setEmail((String)userMap.get("email"));

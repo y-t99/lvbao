@@ -52,7 +52,6 @@ public class UserServlet extends BaseServlet {
         //3、结果信息对象封装为json并返回
         request.setAttribute("result", actiResult);
 
-        System.out.println(actiResult);
     }
 
 
@@ -63,8 +62,6 @@ public class UserServlet extends BaseServlet {
         Result result = userService.login(json,request.getSession());
         //3、返回结果对象
         request.setAttribute("result", result);
-
-        System.out.println(result);
     }
 
     /**
@@ -104,14 +101,6 @@ public class UserServlet extends BaseServlet {
         //3、返回结果对象
         request.setAttribute("result", result);
         System.out.println(result);
-    }
-
-    public void f1(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("f1---"+request.getSession().getId());;
-    }
-
-    public void f2(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("f2---"+request.getSession().getId());;
     }
 
 }

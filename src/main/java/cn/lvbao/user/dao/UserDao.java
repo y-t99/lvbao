@@ -18,7 +18,7 @@ public interface UserDao {
      * 更新用户状态
      * @return
      */
-    boolean updateStatus(long id, int status);
+    boolean updateStatus(String id, int status);
 
     /**
      * 按名字查找用户
@@ -47,7 +47,7 @@ public interface UserDao {
      * @param pass
      * @return
      */
-    boolean updatePass(long id, String pass);
+    boolean updatePass(String id, String pass);
 
     /**
      * 根据名字查找用户是否存在

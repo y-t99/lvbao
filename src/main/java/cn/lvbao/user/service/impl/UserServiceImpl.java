@@ -1,5 +1,6 @@
 package cn.lvbao.user.service.impl;
 
+import cn.lvbao.controllor.IsLoginServlet;
 import cn.lvbao.user.dao.DaoFactory;
 import cn.lvbao.user.dao.UserDao;
 import cn.lvbao.user.dao.impl.UserDaoImpl;
@@ -9,6 +10,7 @@ import cn.lvbao.user.service.UserService;
 import cn.lvbao.user.util.CommonUtils;
 import cn.lvbao.user.util.MailUtils;
 import cn.lvbao.user.util.VerifyCodeUtils;
+import cn.lvbao.util.JjwtUtils;
 import com.alibaba.fastjson.JSONObject;
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
@@ -24,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private String activateMail1=
             "<html><head></head><body>" +
             "<h1>这是一封激活邮件,激活请点击以下链接</h1>" +
-            "<h3><a href='http://localhost:8888/activate.html?code=%s'>点此激活</a></href></h3></body></html>";
+            "<h3><a href='http://localhost:8080/html/activate.html?code=%s'>点此激活</a></href></h3></body></html>";
     private String modifyMail=
             "您正在修改用户名为%s的绿宝账号的密码，" +
             "验证码是：%s。该验证码将在180秒后失效！" +
@@ -38,8 +40,9 @@ public class UserServiceImpl implements UserService {
         Result result;
         User user=JSONObject.toJavaObject(json, User.class);
         //1、补齐数据(id,status,activationCode)
-        user.setStatus(0);
-        String activationCode=CommonUtils.getRandomString();
+        user.setId(CommonUtils.getRandomString());
+        user.setStatus(false);
+        String activationCode=CommonUtils.getRandomString()+CommonUtils.getRandomString();
         user.setActivationCode(activationCode);
         //把激活码存到session
         session.setAttribute("activationCode", activationCode);
@@ -77,7 +80,7 @@ public class UserServiceImpl implements UserService {
         if(user==null){
             //2、如果user为空，说明是无效激活码
             actiResult = new Result(406, "激活码无效！");
-        }else if(user.getStatus()==1){
+        }else if(user.getStatus()==true){
             //3、查看用户状态，如果为1则已激活
             actiResult = new Result(406, "请勿二次激活!");
         }else {
@@ -93,9 +96,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result login(JSONObject json, HttpSession session) {
-        System.out.println("for git");
-        System.out.println("get---"+session.getId());
-        System.out.println(session.getAttribute("verifyCode"));
         Result result = null;
         //1、拿到前端表单用户对象，查询数据库获取实际用户对象
         User formUser=JSONObject.toJavaObject(json, User.class);
@@ -105,11 +105,21 @@ public class UserServiceImpl implements UserService {
             result=new Result(406, "用户名不存在！");
         }else if(!(formUser.getLoginpass()).equals(realUser.getLoginpass())){
             result = new Result(406, "密码错误！");
-//            !(session.getAttribute("verifyCode")).equals(formUser.getVerifyCode())
         }else if(!formUser.getVerifyCode().equalsIgnoreCase((String)session.getAttribute("verifyCode"))){
             result = new Result(406, "验证码错误！");
         }else {
-            result = new Result(200, "");
+            result = new Result(200, "登录成功");
+            result.setUser(realUser);
+            //添加token
+            try {
+                String token = JjwtUtils.createJWT(1, 1000 * 64 * 64);
+                result.setToken(token);
+                //保存用户信息
+                IsLoginServlet.users.put(realUser.getId(),realUser);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             result.setUser(realUser);
         }
         //3、返回结果
@@ -123,8 +133,6 @@ public class UserServiceImpl implements UserService {
         BufferedImage codeImg=verifyCodeUtils.getImage();
         //2、获取验证码（字符串）存到session
         session.setAttribute("verifyCode", verifyCodeUtils.getText());
-        System.out.println("send---"+session.getId());
-        System.out.println(session.getAttribute("verifyCode"));
         return codeImg;
     }
 
