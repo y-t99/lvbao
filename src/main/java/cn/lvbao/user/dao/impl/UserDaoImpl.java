@@ -163,25 +163,5 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    public void f( ){
-        String sql="";
-        try{
-            template.update(sql);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-
 }
 

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GB register</title>
+    <link rel="stylesheet" href="../css/user.css" />
+    <style>
+      
+      .form-group {
+        text-align: center;
+      }
+      #agree {
+        width: 13px;
+        height: 13px;
+        margin: 0;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+      label[for="agree"] {
+        vertical-align: middle;
+        font-size: 14px;
+        margin-right: 150px;
+        cursor: pointer;
+      }
+      label[for="agree"] a {
+    vertical-align: initial;
+}
+label[for="agree"] a:hover{
+  color:rgb(59, 118, 230);
+}
+    </style>
+  </head>
+  <body>
+    <!-- 最外层 -->
+    <div class="register-wrap">
+      <span class="logo"></span>
+      <!-- 标题 -->
+      <p class="head-title">
+        新用户注册
+      </p>
+      <!-- 表单 -->
+      <form action="">
+        <div class="form-group">
+          <input type="text" id="user" placeholder="请输入用户名" autocomplete="off"/>
+          <p id="userError"></p>
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="setPassword"
+            placeholder="请设置密码"
+            autocomplete="off"
+          />
+          <p id="setPasswordError"></p>
+        </div>
+        <div class="form-group">
+          <input type="password" id="confirmPassword" placeholder="请重新输入密码"  autocomplete="off"/>
+          <p id="confirmPasswordError"></p>
+        </div>
+        <div class="form-group">
+          <input type="text" id="mail" placeholder="请输入邮箱"  autocomplete="off"/>
+          <p id="mailError"></p>
+        </div>
+        <div class="form-group">
+          <input type="radio" data-checked="0"id="agree" />
+          <label for="agree">勾选同意<a href="xieyi.html" target="_blank">《用户服务协议》</a></label>
+        </div>
+        <div class="form-group">
+          <input type="button" id="submit" value="注册" />
+        </div>
+        <div class="form-group">
+          <a href="login.html">已有账号，直接登录</a>
+        </div>
+      </form>
+    </div>
+    <div id="result">
+        <div class="bg"></div>
+      <p>
+        注册成功
+        <a href="login.html">去登录</a>
+      </p>
+    </div>
+    <div id="fail"></div>
+    <script src="../js/ajax.js"></script>
+    <script src="../js/user.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+    <script src="../js/mock.js"></script>
+    <script>
+      window.onload = function() {
+        //获取操作元素
+        let user = document.getElementById("user");
+        let userError = document.getElementById("userError");
+        let setPassword = document.getElementById("setPassword");
+        let setPasswordError = document.getElementById("setPasswordError");
+        let confirmPassword = document.getElementById("confirmPassword");
+        let confirmPasswordError = document.getElementById("confirmPasswordError");
+        let mail = document.getElementById("mail");
+        let mailError = document.getElementById("mailError");
+        let agree = document.getElementById("agree");
+        let submit = document.getElementById("submit");
+        let result = document.getElementById("result");
+        let fail = document.getElementById("fail");
+        //iuput失焦时判断错误
+        errorTest(user, userError);
+        errorTest(setPassword, setPasswordError);
+        // errorTest(confirmPassword, confirmPasswordError);
+        errorTest(mail, mailError);
+        errorTest(setPassword,setPasswordError,confirmPassword,confirmPasswordError)
+        cancelChecked(agree);
+        
+        submit.onclick = function() {
+          let condition1 = ifEmpty(user.value, userError);
+          let condition2 = ifEmpty(setPassword.value, setPasswordError);
+          let condition3 = ifEmpty(confirmPassword.value, confirmPasswordError);
+          let condition4 = ifEmpty(mail.value, mailError);
+          let condition5 = false;
+          //如果为空，就不进行判断
+          if(!condition3){
+            condition5 = confirm(setPassword,confirmPassword,confirmPasswordError);
+            if(!condition5){
+              return;
+            }
+          }
+          if(!agree.checked){
+            alert("请同意用户服务协议");
+            return;
+          }  
+          if (!condition1 && !condition2 && !condition3&&!condition4&&condition5) {
+            //请求对象
+            let userMes = {
+              loginname: user.value,
+              loginpass: setPassword.value,
+              email: mail.value
+            };
+            post("http://localhost:8888/user?method=regist", userMes,registerCallback);
+            
+            
+            // 提交表单时，如果勾选状态为1，则将其保存到cookie
+          
+          
+          }
+          //响应函数
+          function registerCallback(xhr) {
+           let xhrObj=JSON.parse(xhr)
+            if (xhrObj.code == 200) {
+              //跳转页面，提示登录成功
+              console.log("注册成功");
+              result.style.display="block";
+              
+            } else {
+              console.log(xhrObj.msg);
+            }
+          }
+        };
+      };
+    </script>
+  </body>
+</html>

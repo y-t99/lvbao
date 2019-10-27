@@ -20,6 +20,7 @@ public abstract class BaseServlet extends HttpServlet {
         String methodName=req.getParameter("method");
         Method method=null;
         try {
+            System.out.println(this.getClass()+"----"+methodName);
             method=this.getClass().getMethod(methodName,HttpServletRequest.class,HttpServletResponse.class);
             method.invoke(this,req,resp);
         } catch (NoSuchMethodException e) {

@@ -22,6 +22,7 @@ import java.util.Map;
 @WebServlet("/public/isLoginServlet")
 public class IsLoginServlet extends BaseServlet{
     public static Map<String,User> users=new HashMap<>();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject json= (JSONObject) req.getAttribute("requestBody");

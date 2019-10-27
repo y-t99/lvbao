@@ -1,12 +1,22 @@
 package ms;
 
+import cn.lvbao.domain.Result;
+import cn.lvbao.idea.dao.IdeaDao;
+import cn.lvbao.idea.dao.impl.IdeaDaoImpl;
+import cn.lvbao.idea.domain.CategoryBean;
+import cn.lvbao.idea.domain.VideoBean;
+import cn.lvbao.idea.service.IdeaService;
+import cn.lvbao.idea.service.impl.IdeaServiceImpl;
 import cn.lvbao.user.dao.DaoFactory;
 import cn.lvbao.user.dao.UserDao;
-import cn.lvbao.user.dao.impl.UserDaoImpl;
 import cn.lvbao.user.domain.User;
+import cn.lvbao.util.CommonUtils;
 import cn.lvbao.util.JDBCUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -63,41 +73,56 @@ class IDUtils {
 
 public class Test {
 
-    private String tabName="lvbao_user";
-    private JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
-    private UserDao userDao= DaoFactory.getUserDao();
-
     @org.junit.Test
     public void test1(){
-        String a="SELECT * FROM lvbao_user WHERE activationCode='7303C31F68DE4635BEFCED37C3D8E0C7'";
-        Map<String,Object> userMap= template.queryForMap(a);
-        System.out.println(userMap);
-        User user=new User();
-        user.setId((String) userMap.get("id"));
-        user.setLoginname((String)userMap.get("loginname"));
-        user.setLoginpass((String)userMap.get("loginpass"));
-        user.setEmail((String)userMap.get("email"));
-        user.setActivationCode((String)userMap.get("activationCode"));
-        System.out.println(user);
+
+        String tabName="lvbao_video";
+        JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
+//1、查询
+        String sql="SELECT * FROM "+tabName;
+        List<Map<String,Object>> videos=template.queryForList(sql);
+        //2、转换结果并返回
+        for(Map video:videos){
+            System.out.println(video);
+            System.out.println(video.getClass());
+        }
     }
+
+    @org.junit.Test
+    public void test2(){
+        JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
+
+        List<VideoBean> videoList = new ArrayList<VideoBean>();
+        //1、查询
+        String sql="SELECT * FROM lvbao_video";
+        List<Map<String,Object>> videos=template.queryForList(sql);
+        //2、将查询所得map列表转化为bean列表
+        for(Map<String,Object> map:videos){
+            VideoBean videoBean = new VideoBean();
+            videoBean.setVideoId((String)map.get("video_id"));
+            videoBean.setVideoUrl((String)map.get("video_url"));
+            videoList.add(videoBean);
+        }
+        //3、返回结果
+        System.out.println(videoList);
+    }
+
     @org.junit.Test
     public void test3(){
-//        User user = userDao.queryByName("321");
-//        System.out.println(user);
-        Long sendTime=Long.parseLong("E45ED6D4#1571476591975".split("#", 2)[1]);
+        JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
 
+        List<VideoBean> videoList = new ArrayList<VideoBean>();
+        //1、查询
+        String sql="SELECT * FROM lvbao_video";
+        List<Map<String,Object>> videos=template.queryForList(sql);
+        //2、将查询所得map列表转化为bean列表
+        for(Map<String,Object> map:videos){
+            VideoBean videoBean = new VideoBean();
+            videoBean.setVideoId((String)map.get("video_id"));
+            videoBean.setVideoUrl((String)map.get("video_url"));
+            videoList.add(videoBean);
+        }
+        System.out.println(videoList);
+        //3、返回结果
     }
-
-    @org.junit.Test
-    public void test2() {
-        long t1=System.currentTimeMillis();
-        long t2=System.currentTimeMillis()-t1;
-        System.out.println(t2);
-    }
-    @org.junit.Test
-    public void test4(){
-        long t2=System.currentTimeMillis();
-        System.out.println(t2);
-    }
-
 }

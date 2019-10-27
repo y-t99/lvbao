@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GB reset_pw</title>
+    <link rel="stylesheet" href="../css/user.css" />
+    <style>
+      .register-wrap {
+        top: 100px;
+        height: 390px;
+        padding: 0;
+      }
+      .form-group {
+        text-align: center;
+        position: relative;
+      }
+      .next {
+        width: 1290px;
+      }
+      .step {
+        position: absolute;
+        display: none;
+        float: left;
+        width: 429px;
+        padding: 55px 40px 10px;
+        box-sizing: border-box;
+      }
+      .step1 {
+        display: block;
+      }
+      .bg {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        background: URL(../img/success.png) no-repeat center;
+        background-size: contain;
+      }
+      a.to-login {
+        display: inline-block;
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        margin-bottom: 5px;
+        margin-top: -3px;
+        border-radius: 8px;
+        background: rgb(77, 112, 216);
+        color: #fff;
+        font-size: 15px;
+        text-indent: 8px;
+      }
+
+      a.to-login:hover {
+        color:#fff;
+        background: rgb(60, 96, 206);
+      }
+      input#getCode {
+        position: absolute;
+        right: 2px;
+        top: 4px;
+        width: 92px;
+        height: 30px;
+        background: rgb(77, 112, 216);
+        border: none;
+        border-radius: 5px;
+        color: #fff;
+      }
+      input#getCode:hover {
+        background: rgb(60, 96, 206);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 最外层 -->
+    <div class="register-wrap">
+      <span class="logo"></span>
+      <div class="next clearfix">
+        <div class="step step1">
+          <!-- 标题 -->
+          <p class="head-title">
+            忘记密码
+          </p>
+          <!-- 表单 -->
+          <form action="">
+            <div class="form-group">
+              <input type="text" id="mail" placeholder="请输入邮箱" />
+              <p id="mailError"></p>
+            </div>
+            <div class="form-group">
+              <input type="text" id="codeInput" placeholder="请输入验证码" />
+              <p id="codeInputError"></p>
+              <input type="button" id="getCode" value="获取验证码" />
+            </div>
+            <div class="form-group">
+              <input type="button" id="next" value="下一步" />
+            </div>
+            <div class="form-group">
+              <a href="login.html">返回登录</a>
+            </div>
+          </form>
+        </div>
+        <div class="step step2">
+          <!-- 标题 -->
+          <p class="head-title">
+            重置密码
+          </p>
+          <!-- 表单 -->
+          <form action="">
+            <div class="form-group">
+              <input
+                type="password"
+                id="setPassword"
+                placeholder="请输入新密码"
+              />
+              <p id="setPasswordError"></p>
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="请再次输入密码"
+              />
+              <p id="confirmPasswordError"></p>
+            </div>
+            <div class="form-group">
+              <input type="button" id="submit" value="重置密码" />
+            </div>
+          </form>
+        </div>
+        <div class="step step3">
+          <div class="form-group">
+            <div class="bg"></div>
+          </div>
+          <div class="form-group">
+            <h2>密码重置成功</h2>
+            <h5>请妥善保护你的账户信息</h5>
+          </div>
+          <div class="form-group">
+            <a href="login.html" class="to-login">重新登录</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="../js/ajax.js"></script>
+    <script src="../js/user.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+    <script src="../js/mock.js"></script>
+    <script>
+      let steps = document.getElementsByClassName("step");
+      let codeInput = document.getElementById("codeInput");
+      let codeInputError = document.getElementById("codeInputError");
+      let setPassword = document.getElementById("setPassword");
+      let setPasswordError = document.getElementById("setPasswordError");
+      let confirmPassword = document.getElementById("confirmPassword");
+      let confirmPasswordError = document.getElementById("confirmPasswordError");
+      let mail = document.getElementById("mail");
+      let mailError = document.getElementById("mailError");
+      let getCode = document.getElementById("getCode");
+      let next = document.getElementById("next");
+      let submit = document.getElementById("submit");
+
+      //失焦时判空
+      errorTest(mail, mailError);
+      errorTest(codeInput, codeInputError);
+      errorTest(setPassword, setPasswordError);
+      errorTest(confirmPassword, confirmPasswordError);
+
+      getCode.onclick = function() {
+        let eData = {
+          email: mail.value
+        };
+        // post("https://www.test7.com", eData, getCodeCallback);
+        post("http://localhost:8888/user?method=sendModifyPwdMail", eData, getCodeCallback);
+      };
+      next.onclick = function() {
+        let condition1 = ifEmpty(mail.value, mailError);
+        let condition2 = ifEmpty(codeInput.value, codeInputError);
+        if (!condition2 && !condition1) {
+          let data = {
+            verifyCode:codeInput.value
+          };
+          // post("https://www.test7.com", data, nextCallback);
+          post("http://localhost:8888/user?method=checkMailCodeServlet", data, nextCallback);
+        }
+      };
+      submit.onclick = function() {
+        let condition3 = ifEmpty(setPassword.value, setPasswordError);
+        let condition4 = ifEmpty(confirmPassword.value, confirmPasswordError);
+
+        if (!condition3 && !condition4) {
+          let data = {
+            loginpass: setPassword.value,
+            repass: confirmPassword.value
+          };
+          // post("https://www.test7.com", data, resetCallback);
+          post("http://localhost:8888/user?method=modifyPass", data, resetCallback);
+        }
+      };
+      function getCodeCallback(xhr) {
+        let xhrObj = JSON.parse(xhr);
+        if (xhrObj.code == 200) {
+          console.log("fasong");
+        }
+      }
+      function nextCallback(xhr) {
+        let xhrObj = JSON.parse(xhr);
+        if (xhrObj.code == 200) {
+          clearStep();
+          steps[1].style.display = "block";
+        }
+      }
+      function resetCallback(xhr) {
+        let xhrObj = JSON.parse(xhr);
+        if (xhrObj.code == 200) {
+          clearStep();
+          steps[2].style.display = "block";
+        }
+      }
+      function clearStep() {
+        for (let i = 0; i < steps.length; i++) {
+          steps[i].style.display = "none";
+        }
+      }
+    </script>
+  </body>
+</html>
