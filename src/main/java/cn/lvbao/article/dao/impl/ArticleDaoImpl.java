@@ -9,6 +9,7 @@ import cn.lvbao.index.domain.PageBean;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,31 @@ import java.util.Map;
  * #create 2019-10-16-15:22
  */
 public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
+    /**
+     * 点赞数缓存
+     *  文章id    文章点赞数
+     */
+    public static Map<String,Integer> articleStarCount=new HashMap<>();
+    /**
+     * 点赞文章和用户id绑定表
+     *  用户id    list<文章id>
+     */
+    public static Map<String,List<String>> articleStarBand=new HashMap<>();
+    /**
+     * 点赞数缓存
+     *  回复id    回复点赞数
+     */
+    public static Map<String,Integer> reviewStarCount=new HashMap<>();
+    /**
+     * 点赞回复和用户id绑定表
+     *  用户id    list<回复id>
+     */
+    public static Map<String,List<String>> reviewStarBand=new HashMap<>();
+
+    public static Map<String,Integer> replyStarCount=new HashMap<>();
+
+    public static Map<String,List<String>> replyStarBand=new HashMap<>();
+
     private static ArticleDaoImpl ARTICLE_DAO;
     static {
         ARTICLE_DAO=new ArticleDaoImpl();
@@ -91,6 +117,101 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
         List<ReviewBean> list=fillList(maps);
         return list;
     }
+//---------------------------------------点赞---------------------------------------------//
+
+    /**
+     * 计数
+     * @param id
+     * @param map
+     */
+    private void addCount(String id,Map<String,Integer> map) {
+        if(map.containsKey(id)){
+            Integer count = map.get(id);
+            map.put(id,count+1);
+        }else{
+            map.put(id,1);
+        }
+    }
+    /**
+     * 添加点赞id和用户id绑定
+     * @param id
+     * @param userID
+     * @param map
+     */
+    private void addBand(String id, String userID,Map<String,List<String>> map) {
+        if(map.containsKey(userID)){
+            List<String> list = map.get(userID);
+            list.add(id);
+        }else{
+            List<String> list=new ArrayList<>();
+            list.add(id);
+            map.put(userID,list);
+        }
+    }
+
+
+    @Override
+    public void addArticleStar(String articleID) {
+        //点赞数缓存列表中是否有id,有加一,没有则创建新的点赞。
+        addCount(articleID,articleStarCount);
+    }
+
+    @Override
+    public void addReviewStar(String reviewID) {
+        addCount(reviewID,reviewStarCount);
+    }
+    @Override
+    public void addReplyStar(String replyID) {
+        addCount(replyID,replyStarCount);
+    }
+
+    @Override
+    public void saveArticleStarMsg(String articleID, String userID) {
+        //有改id的list,直接将文章id添加到表中。没有新建
+        addBand(articleID,userID,articleStarBand);
+    }
+
+    @Override
+    public void saveReviewStarMsg(String reviewID, String userID) {
+        addBand(reviewID, userID,reviewStarBand);
+    }
+
+    @Override
+    public void saveReplyStarMas(String replyID, String userID) {
+        addBand(replyID,userID,replyStarBand);
+    }
+
+
+    //------------------------------结束保存缓存数据------------------------------------------//
+    @Override
+    public void saveStarCount() {
+        String sql="UPDATE lvbao_article SET article_start = ? " +
+                " WHERE article_id=? ";
+        String num="SELECT article_start FROM lvbao_article " +
+                " WHERE article_id=? ";
+        Map<String, Object> map;
+        Integer n;
+        //1、循环缓存表
+        for(String key:articleStarCount.keySet()){
+            //2、获取数量
+            map = selectOneToMap(num, key);
+            n = (Integer) map.get("article_start")+articleStarCount.get(key);
+            //3、跟新数量
+            update(sql,n,key);
+        }
+    }
+
+    @Override
+    public void saveStarBand() {
+        //遍历绑定表,将userID和articleID保存到
+        String sql="INSERT INTO lvbao_star values(?,?)";
+        for(String key:articleStarBand.keySet()){
+            for(String articleID:articleStarBand.get(key)){
+                update(sql,articleID,key);
+            }
+        }
+    }
+//---------------------------------点赞结束---------------------------------------//
 
     /**
      * 封装maps

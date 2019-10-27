@@ -66,4 +66,24 @@ public class ArticlePageServlet extends BaseServlet{
     public void master(HttpServletRequest req, HttpServletResponse resp){
 
     }
+    /**
+     * 点赞
+     */
+    public void giveStar(HttpServletRequest req,HttpServletResponse resp){
+        //1、获取json对象
+        JSONObject json=(JSONObject)req.getAttribute("requestBody");
+        //2、将文章id号和用户id号出入service
+        Result<Object> result=service.star((String)json.get("starType"),(String)json.get("articleID"),(String)json.get("userID"));
+        //3、返回成功给前端
+        req.setAttribute("result",result);
+    }
+
+    @Override
+    public void destroy() {
+        //将缓存写入数据库中
+        //1、点赞表
+        service.saveStarCount();
+        //2、绑定表
+        service.saveStarBand();
+    }
 }

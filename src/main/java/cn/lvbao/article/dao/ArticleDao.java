@@ -26,5 +26,51 @@ public interface ArticleDao {
      */
     int getReviewCount(String id);
 
+    /**
+     * 查找用户回复列表
+     * @param id
+     * @param pageBean
+     * @param condition
+     * @return
+     */
     List<ReviewBean> findReviewsList(String id, PageBean<ReviewBean> pageBean, String condition);
+
+    /**
+     * 文章点赞数增加1
+     * @param articleID
+     */
+    void addArticleStar(String articleID);
+
+    /**
+     * 点赞文章id和用户id绑定
+     * @param articleID
+     * @param userID
+     */
+    void saveArticleStarMsg(String articleID, String userID);
+
+    /**
+     * 保存缓存点赞表
+     */
+    void saveStarCount();
+
+    /**
+     * 保存缓存绑定表
+     */
+    void saveStarBand();
+
+    /**
+     * 回复点赞缓存
+     * @param reviewID
+     */
+    void addReviewStar(String reviewID);
+
+    /**
+     * 回复id和用户id进行绑定
+     * @param reviewID
+     * @param userID
+     */
+    void saveReviewStarMsg(String reviewID, String userID);
+
+    void addReplyStar(String replyID);
+    void saveReplyStarMas(String replyID,String userID);
 }

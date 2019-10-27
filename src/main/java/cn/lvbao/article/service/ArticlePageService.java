@@ -22,5 +22,21 @@ public interface ArticlePageService {
      */
     Result<PageBean<ReviewBean>> getRecord(String id, PageBean<ReviewBean> pageBean, String condition);
 
+    /**
+     * 点赞
+     * @param articleID
+     * @param userID
+     * @return
+     */
+    Result<Object> star(String starType,String articleID, String userID);
 
+    /**
+     * 保存点赞表
+     */
+    void saveStarCount();
+
+    /**
+     * 保存点赞数表
+     */
+    void saveStarBand();
 }

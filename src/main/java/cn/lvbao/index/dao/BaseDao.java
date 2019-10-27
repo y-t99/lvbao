@@ -98,5 +98,6 @@ public abstract class BaseDao<T> {
                             Object... args){
         return template.queryForObject(sql,Integer.class,args);
     }
+
 }
 

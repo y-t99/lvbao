@@ -65,6 +65,44 @@ public class ArticlePageServiceImpl implements ArticlePageService {
         return result;
     }
 
+    @Override
+    public Result<Object> star(String starType,String id, String userID) {
+        Result result=new Result();
+
+        //有异常返回200
+        try {
+            if (starType.equals("articleStar")) {
+                //1、dao进行计数
+                dao.addArticleStar(id);//文章点赞数增加一
+                //2、保存点赞信息
+                dao.saveArticleStarMsg(id, userID);//点赞文章和用户id绑定
+            }else if (starType.equals("reviewStar")){
+                dao.addReviewStar(id);//回复点赞加一
+                dao.saveReviewStarMsg(id, userID);//点赞回复和用户id绑定
+            }else if(starType.equals("replyStar")){
+                dao.addReplyStar(id);
+                dao.saveReplyStarMas(id,userID);
+            }
+            //3、点赞成功
+            result.setCode(200);
+            result.setMsg("点赞成功");
+        }catch (Exception e){
+            result.setCode(402);
+            result.setMsg("点赞失败");
+        }
+        return result;
+    }
+
+    @Override
+    public void saveStarCount() {
+        dao.saveStarCount();
+    }
+
+    @Override
+    public void saveStarBand() {
+        dao.saveStarBand();
+    }
+
     private void fillPage(String id, PageBean<ReviewBean> pageBean) {
         // 获得文章评论总记录数
         int totalCount=dao.getReviewCount(id);

@@ -40,6 +40,19 @@ public class ArticleBean {
      */
     private String content;
 
+    /**
+     * 是否点赞过
+     */
+    private boolean star;
+
+    public boolean isStar() {
+        return star;
+    }
+
+    public void setStar(boolean star) {
+        this.star = star;
+    }
+
     public String getTitle() {
         return title;
     }

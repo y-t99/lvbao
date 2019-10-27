@@ -38,6 +38,19 @@ public class ReviewBean {
      */
     private List<ReplyBean> list;
 
+    /**
+     * 是否点赞过
+     */
+    private boolean star;
+
+    public boolean isStar() {
+        return star;
+    }
+
+    public void setStar(boolean star) {
+        this.star = star;
+    }
+
     public String getId() {
         return id;
     }
