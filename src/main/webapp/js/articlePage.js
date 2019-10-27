@@ -10,12 +10,12 @@ article={
 };
 // EC641B3954D54A728ADA0CBAA319DE96
 window.onload=function(){
-    // /*
-    //  *地址栏获取参数
-    //  */
-    // let articltID=getUrlParam("id");
-    // article.id=  articltID;
-    // review.id=articltID;
+    /*
+     *地址栏获取参数
+     */
+    let articltID=getUrlParam("id");
+    article.id=  articltID;
+    review.id=articltID;
 
     /*
      *表情包
@@ -31,7 +31,7 @@ window.onload=function(){
      * 文章
      */
     $.ajax({
-        url:"http://localhost:8080/articlePageServlet?method=articleBody ",
+        url:"../articlePageServlet?method=articleBody ",
         type:"POST",
         data:JSON.stringify(article),
         contentType:'application/json;charset=UTF-8',
@@ -56,25 +56,29 @@ window.onload=function(){
      * 评论区
      */
     reviewReq(review);
+    /*
+     *  请求点赞并提供文章和用户ID号
+     */
+
 };
 
 /**
  * 获取地址参数
  */
-// function getUrlParam(name){
-//     var reg=new RegExp('(^|&)'+name+'=([^&]*)(&|$)');
-//     var result=window.location.search.substr(1).match(reg);
-//     console.log(result);
-//     console.log(result[2]);
-//     return result ? decodeURIComponent(result[2]):null;
-// }
+function getUrlParam(name){
+    var reg=new RegExp('(^|&)'+name+'=([^&]*)(&|$)');
+    var result=window.location.search.substr(1).match(reg);
+    console.log(result);
+    console.log(result[2]);
+    return result ? decodeURIComponent(result[2]):null;
+}
 /**
  * 评论区请求
  * @param review
  */
 function reviewReq(review) {
     $.ajax({
-        url:"http://localhost:8080/articlePageServlet?method=record ",
+        url:"../articlePageServlet?method=record ",
         type:"POST",
         data:JSON.stringify(review),
         contentType:'application/json;charset=UTF-8',
@@ -85,11 +89,18 @@ function reviewReq(review) {
                 fillReview(data);
                 // 点赞图片
                 $('.dz').mouseenter(function(){
-                    $(this).prop("src","img/dianzan_.png");
+                    $(this).prop("src","../img/dianzan_.png");
                     $(this).css("cursor","Pointer");
                 });
                 $('.dz').mouseleave(function(){
-                    $(this).prop("src","img/dianzan.png");
+                    $(this).prop("src","../img/dianzan.png");
+                });
+                $('.sc').mouseenter(function(){
+                    $(this).prop("src","../img/sc_.png");
+                    $(this).css("cursor","Pointer");
+                });
+                $('.sc').mouseleave(function(){
+                    $(this).prop("src","../img/sc.png");
                 });
                 review.currentPage=data.data.currentPage;
                 //连接注册
@@ -121,7 +132,7 @@ function fillReview(data) {
             "    <div class=\"review-wrap\">\n" +
             "        <!--评论盒子左部-->\n" +
             "        <div class=\"left-wrap\">\n" +
-            "            <img class=\"portrait\" src=\"123.PNG\">\n" +
+            "            <img class=\"portrait\" src=\"../123.PNG\">\n" +
             "        </div>\n" +
             "        <!--评论盒子右部-->\n" +
             "        <div class=\"right-wrap\">\n" +
@@ -140,7 +151,7 @@ function fillReview(data) {
             "                <!--评论其他信息点块-->\n" +
             "                <div class=\"comment-bottom\">\n" +
             "                    <span class=\"comment-bottom-span\">"+new Date(parseInt(item.sdTime)).toLocaleString()+"</span>\n" +
-            "                    <span class=\"comment-bottom-span\"><img class=\"dz\" src=\"img/dianzan.png\">"+item.start+"</span>\n" +
+            "                    <span class=\"comment-bottom-span\"><img class=\"dz\" src=\"../img/dianzan.png\">"+item.start+"</span>\n" +
             "                    <span class=\"comment-bottom-span\"><a class=\"reply-a\" href=\"javascript:void(0);\">回复</a></span>\n" +
             "                </div>\n" +
             "            </div>";
@@ -151,7 +162,7 @@ function fillReview(data) {
                 str+="      <!--回复-1-->\n" +
                     "        <div class=\"review-reply\">\n" +
                     "                <div class=\"reply-left\">\n" +
-                    "                    <img class=\"reply-portrait\" src=\"123.PNG\">\n" +
+                    "                    <img class=\"reply-portrait\" src=\"../123.PNG\">\n" +
                     "                </div>\n" +
                     "                <div class=\"reply-right\">\n" +
                     "                    <!--回复信息-->\n" +
@@ -166,7 +177,7 @@ function fillReview(data) {
                     "                    <!--评论其他信息点块-->\n" +
                     "                    <div class=\"comment-bottom\">\n" +
                     "                        <span class=\"comment-bottom-span\">"+new Date(parseInt(reply.sdTime)).toLocaleString()+"</span>\n" +
-                    "                        <span class=\"comment-bottom-span\"><img class=\"dz\" src=\"img/dianzan.png\">"+reply.start+"</span>\n" +
+                    "                        <span class=\"comment-bottom-span\"><img class=\"dz\" src=\"../img/dianzan.png\">"+reply.start+"</span>\n" +
                     "                        <span class=\"comment-bottom-span\"><a class=\"reply-a\" href=\"javascript:void(0);\">回复</a></span>\n" +
                     "                    </div>\n" +
                     "                </div>\n" +
@@ -181,7 +192,7 @@ function fillReview(data) {
         str+="<!--分页-->\n" +
             "    <div class=\"paging-wrap\">";
     }
-    //对分页进行排榜
+    //对分页进行排版
     for(let i=1;i<=data.data.totalPage;i++){
         if(i===data.data.currentPage){
             str+="<a href=\"javascript:void(0);\" class=\"paging-a\" id=\"currentPage\">"+i+"</a>";
@@ -216,7 +227,7 @@ function condition(condition) {
     if(condition===review.condition){
         return;
     }else if(condition==='time'){
-        $("#condition-time").addClass("selected");//变蓝
+        $("#condition-time").addClass("selected");//变灰
         $("#condition-start").removeClass("selected");//变粉
         review.condition='time';
     }else if(condition==='start'){

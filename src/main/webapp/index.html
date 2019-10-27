@@ -2,128 +2,421 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <!--js导入-->
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/articlePage.js"></script>
-    <!--css样式-->
-    <style>
-
-    </style>
-    <link rel="stylesheet" type="text/css" href="css/articlePage.css"/>
+    <title>GB</title>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/iconfont.css">
+    <link rel="stylesheet" href="css/iconfont1.css">
 </head>
 <body>
-<nav>
-    <ul>
-        <li><a id="article-nav" href="#article-position">文章</a></li>
-        <li><a id="review-nav" href="#review-position">评论</a></li>
-    </ul>
-</nav>
-
-
-<div class="wrap">
-    <!--文章-->
-    <div class="content-pane">
-        <a id="article-position"></a>
-        <!--文章相关-->
-        <div class="article-about">
-        </div>
-            <!--分隔线-->
-            <hr class="content-line"/>
-            <!--文章主体内容-->
-        <div class="content">
-        </div>
-    </div>
-    <!--个人信息-->
-    <div class="person-pane">
-        <img class="author-portrait" src="123.PNG">
-        <span class="author-name">手艺活</span>
-        <span class="author-motto">一个创意生活在你的眼前</span>
-        <div class="author-a"><a class="author-attent" href="">关注</a><a href="">私信</a></div>
-        <div>
-            <table class="author-info">
-                <tr class="author-info-title">
-                    <td>文章</td>
-                    <td>关注</td>
-                    <td>分类</td>
-                </tr>
-                <tr class="author-num">
-                    <td>4</td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-
-    <!--评论区-->
-    <div  class="content-pane review-pane">
-        <a id="review-position"></a>
-        <ul id="condition-wrap">
-            <li><a href="javascript:condition('time');" class="condition selected" id="condition-time">按时间排序</a></li>
-            <li><a href="javascript:condition('start');" class="condition " id="condition-start">按点赞排序</a></li>
-        </ul>
-        <!--编辑评论-->
-        <div class="comment-send no-login">
-            <div class="user-face"><img src="123.PNG"></div>
-            <div class="textarea-container">
-                <!--contenteditable="true"-->
-                <div class="textarea">
-                    <div class="login-tip">请先<a class="button login" href="javascript:void(0);">登录</a>后发表评论(・ω・)</div>
-                </div>
-                <a href="javascript:void(0);" class="button send no-send" >发表言论</a>
+    <div class="blue-bg"></div>
+    <!-- 上：导航栏+装饰+轮播 -->
+    <header>
+        <nav>
+            <div class="wrap">
+                <a href="index.html" class="nav-logo"></a>
+                <!-- 左边列表 -->
+                <ul class="func">
+                    <li>
+                        <a href="javascript:;">绿宝首页</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">绿宝创意</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">学习中心</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">个人中心</a>
+                    </li>
+                    <li>
+                        <a href="javascript:;">更多</a>
+                        <ul class="extend">
+                                <li>
+                                    <a href="#">上传作品</a>
+                                </li>
+                                <li>
+                                    <a href="#">发布话题</a>
+                                </li>
+                            </ul>
+                    </li>
+                </ul>
+                <!-- 右边列表 -->
+                <ul class="user">
+                    <!-- 搜索图标 -->
+                    <li>
+                        <div class="nav-search">
+                            <div class="select">
+                                <span id="selectContent">创意</span>
+                                <svg id="selectBtn" class="icon" aria-hidden="true" data-show="0">
+                                        <use xlink:href="#icon-arrow_xiangyou"></use>
+                                      </svg>
+                                <ul id="selectItems">
+                                    <li>创意</li>
+                                    <li>主题</li>
+                                </ul>
+                            </div><input id="navSearch" type="text" placeholder="请输入内容">
+                            <!-- <span id="navSearchBtn" class="iconfont icon-icon-test"></span> -->
+                            <a href="javascript:;" class="iconfont icon-icon-test" id="navSearchBtn"></a>
+                        </div>
+                    </li>
+                    <!-- 上传图标 -->
+                    <li>
+                        <!-- <span class="iconfont icon-shangchuan"></span> -->
+                        <a href="javascript:;" class="iconfont icon-shangchuan"></a>
+                                <ul class="extend">
+                                    <li>
+                                        <a href="#">上传作品</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">发布话题</a>
+                                    </li>
+                                </ul>
+                    </li>
+                    <li>
+                        <a href="html/login.html">登录</a>
+                    </li>
+                    <li>
+                        <a href="html/register.html">注册</a>
+                    </li>
+                </ul>
             </div>
-            <div class="face-wrap">
-                <a href="javascript:void(0);" class="button face" id="face"><img src="img/face.png"><span>表情</span></a>
-                <div class="emoji-wrap">
-                    <a class="emoji" href="javascript:void(0);"><img title="[微笑]" src="img/emoji/bf3ea8541e1bd469255a907f7b60015ad9abf1ce.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[嫌弃]" src="img/emoji/de4c0783aaa60ec03de0a2b90858927bfad7154b.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[喜欢]" src="img/emoji/8a10a4d73a89f665feff3d46ca56e83dc68f9eb8.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[呆]" src="img/emoji/33ad6000d9f9f168a0976bc60937786f239e5d8c.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[大哭]" src="img/emoji/2caafee2e5db4db72104650d87810cc2c123fc86.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[害羞]" src="img/emoji/9d2ec4e1fbd6cb1b4d12d2bbbdd124ccb83ddfda.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[无语]" src="img/emoji/44667b7d9349957e903b1b62cb91fb9b13720f04.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[委屈]" src="img/emoji/d2f26cbdd6c96960320af03f5514c5b524990840.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[尴尬]" src="img/emoji/cb321684ed5ce6eacdc2699092ab8fe7679e4fda.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[生气]" src="img/emoji/3195714219c4b582a4fb02033dd1519913d0246d.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[奸笑]" src="img/emoji/bb84906573472f0a84cebad1e9000eb6164a6f5a.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[大笑]" src="img/emoji/ca94ad1c7e6dac895eb5b33b7836b634c614d1c0.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[囧]" src="img/emoji/12e41d357a9807cc80ef1e1ed258127fcc791424.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[捂脸]" src="img/emoji/6921bb43f0c634870b92f4a8ad41dada94a5296d.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[阴险]" src="img/emoji/ba8d5f8e7d136d59aab52c40fd3b8a43419eb03c.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[灵魂出窍]" src="img/emoji/43d3db7d97343c01b47e22cfabeca84b4251f35a.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[吐]" src="img/emoji/06946bfe71ac48a6078a0b662181bb5cad09decc.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[抠鼻]" src="img/emoji/cb89184c97e3f6d50acfd7961c313ce50360d70f.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[惊喜]" src="img/emoji/0afecaf3a3499479af946f29749e1a6c285b6f65.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[喜极而泣]" src="img/emoji/485a7e0c01c2d70707daae53bee4a9e2e31ef1ed.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[笑哭]" src="img/emoji/c3043ba94babf824dea03ce500d0e73763bf4f40.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[画风突变]" src="img/emoji/ba4de7a3f97644038b15195bdc9f82a8fd118e77.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[妙啊]" src="img/emoji/b4cb77159d58614a9b787b91b1cd22a81f383535.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[doge]" src="img/emoji/bba7c12aa51fed0199c241465560dfc2714c593e.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[滑稽]" src="img/emoji/d15121545a99ac46774f1f4465b895fe2d1411c3.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[吃瓜]" src="img/emoji/4191ce3c44c2b3df8fd97c33f85d3ab15f4f3c84.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[打call]" src="img/emoji/431432c43da3ee5aab5b0e4f8931953e649e9975.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[偷笑]" src="img/emoji/6c49d226e76c42cd8002abc47b3112bc5a92f66a.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[惊讶]" src="img/emoji/f8e9a59cad52ae1a19622805696a35f0a0d853f3.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[傲娇]" src="img/emoji/010540d0f61220a0db4922e4a679a1d8eca94f4e.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[疼]" src="img/emoji/905fd9a99ec316e353b9bd4ecd49a5f0a301eabf.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[吓]" src="img/emoji/9c10c5ebc7bef27ec641b8a1877674e0c65fea5d.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[点赞]" src="img/emoji/1a67265993913f4c35d15a6028a30724e83e7d35.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[生病]" src="img/emoji/0f25ce04ae1d7baf98650986454c634f6612cb76.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[嘘声]" src="img/emoji/e64af664d20716e090f10411496998095f62f844.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[爱心]" src="img/emoji/ed04066ea7124106d17ffcaf75600700e5442f5c.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[响指]" src="img/emoji/1b5c53cf14336903e1d2ae3527ca380a1256a077.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[支持]" src="img/emoji/3c210366a5585706c09d4c686a9d942b39feeb50.png@56w_56h.png"></a>
-                    <a class="emoji" href="javascript:void(0);"><img title="[黑洞]" src="img/emoji/e90ec4c799010f25391179118ccd9f66b3b279ba.png@56w_56h.png"></a>
-                </div>
+        </nav>
+        <div class="decoration clearfix">
+            <div class="wrap">
+
+                <span class="sun"></span>
+                <span class="cloud cloud1"></span>
+                <span class="cloud cloud2"></span>
             </div>
         </div>
-        <hr class="review-line"/>
-        <div id="review">
+        <div class="wrap slideshow clearfix">
+                <ul>
+                    <li class="img active"><img src="img/footer_bg.png" alt="banner1"></li>
+                    <li class="img"><img src="img/footer_bg.png"alt="banner2"></li>
+                    <li class="img"><img src="img/bg17.png" alt="banner3"></li>
+                    <li class="img"><img src="img/footer_bg.png" alt="banner4"></li>
+                    <li class="img"><img src="img/bg17.png" alt="banner5"></li>
+                    <li class="img"><img src="img/footer_bg.png" alt="banner6"></li>
+                </ul>
 
+                <div class="btn1">
+                    <span class="iconfont icon-arrow-l" id="goPre"></span>
+                    <span class="iconfont icon-arrow-r 
+                    " id="goNext"></span>    
+            </div>
+            <div class="btn2">
+                <ul>
+                    <li class="point active" data-index="0"></li>
+                    <li class="point" data-index="1"></li>
+                    <li class="point" data-index="2"></li>
+                    <li class="point" data-index="3"></li>
+                    <li class="point" data-index="4"></li>
+                    <li class="point" data-index="5"></li>
+                </ul>
+            </div>
         </div>
-    </div>
+            
+    </header>
+
+    <!-- 中：垃圾信息识别+创意作品 -->
+
+    <main>
+        <div class="title clearfix">
+            <div class="wrap">
+                
+                <h2 class="head-title"><svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-earthplanetinternettechnologyfuturesc"></use>
+                </svg>垃圾信息识别</h2>
+            </div>
+            <div class="wrap">
+                <p id="notice" class="clearfix">
+                       <i id="noticeBtn" class="iconfont icon-guangbo"></i>
+
+                    垃圾儿女要分家，安居乐业靠大家
+                </p>
+            </div>
+        </div>
+        <div class="identify main-parts">
+            <div class="wrap">
+                    <form class="rubbish-form">
+                            <!-- input输入框禁止显示历史记录 -->
+                        <input id="rubSearch" type="text"  autocomplete="off" placeholder="请输入关键词"><input id="rubSearchBtn" type="button" value="点击搜索">
+                        <span class="iconfont icon-sousuo" id="rubSousuo"></span>
+                            <span id="rubDelete" class="iconfont icon-shanchu"></span>
+                            <!-- 清空键
+                                搜索框内有内容时出现,无内容不出现
+                                点击清空搜索框内容
+                            -->
+                        </form>
+                        <ul id="menu"></ul>
+                    <!-- 
+                        点击搜索按钮时，
+                        搜索框内无内容，不出现（！！！默认搜索内容value？)
+                        搜索框内有内容，出现
+                    -->
+
+                    <div class="mes-field-wrap">
+                        <div  id="messageField" class="mes-field">
+                            <div class="intro-gb">
+                                <span class="slogan1">湿垃圾？干垃圾？</span>
+                                <span class="slogan2">这到底是什么垃圾？</span>
+                                <span class="slogan3">可回收垃圾？</span>
+                                <span class="slogan4">不可回收垃圾？</span>
+                                <span class="slogan5">有害垃圾？</span>
+                                <span class="slogan6">绿色环保</span>
+                                <span class="slogan7">低碳生活</span>
+                            </div>
+                            <div class="active-earth"></div>
+                                <div class="result-field">
+                                    <span id="close" class="iconfont icon-shanchu"></span>
+                                    <div id="found">
+                                        <div id="mes-catagory">
+                                            <p class="catagory">可回收垃圾</p>
+                                            <p class="info">可回收垃圾,报纸、杂志、图书、各种包装纸、办公用纸、纸盒等，但是纸巾卫生纸由于水溶性太强不可回收；</p>
+                                        </div>
+                                        <div id="mes-related">
+                                            <p>查阅相关：</p>
+                                            <a href="#">纸类</a>
+                                            <a href="#">可回收垃圾</a>
+                                        </div>
+                                        <a href="javascript:;" id="return-search1">继续搜索</a>
+                                    </div>
+                                    <div id="no-found">
+                                        <img src="img/earth2.png" alt="amazing" class="amazing">
+                                        <p class="mes">糟糕，库存中找不到相关信息</p>
+                                        <p>
+                                            <a href="javascrtpt:;" class="feedback">点击为我们扩增库存</a>
+                                            <a href="javascrtpt:;" id="return-search2">重新搜索</a>
+                                        </p>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="title clearfix">
+            <div class="wrap">
+                <div class="left-title">
+                    <h2 class="head-title"><svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-earthplanetinternettechnologyfuturesc"></use>
+                    </svg>废宝创意</h2>
+                    <ul id="sub-title">
+                        <li>推荐作品</li>
+                        <li>最新作品</li>
+                    </ul>
+                </div>
+                <div class="right-title">
+                    <h3><svg class="icon" aria-hidden="true">
+            <use xlink:href="#icon-pictures"></use>
+          </svg>照片墙</h3>
+                </div>
+            </div>
+        </div>
+        <div class="creative-work main-parts" id="creativeWork">
+            <div class="wrap clearfix">
+                <div class="essay">
+                    <div id="essayShow">
+                    <div class="work">
+                        <div class="work-pic">
+                            <img src="img/exhibition1.jpg" alt="exhibition"/>
+                        </div>
+                        <div class="work-intro">
+                            <div class="headline">
+                                <span class="work-tag">DIY教程</span>
+                                <a href="#" class="work-title"></a>
+                                <span class="work-date">2019-03-01</span>
+                            </div>
+                            <p class="work-content">手工制作金色吸管吊饰需要用到：废吸管、铁丝、跳环、钳子、尺子、剪刀、手喷漆、挂绳或者链子。如果你家里还有一些过期或者报废的吸管，通过这个方法进行废吸管化废为宝，让它们重新派上用场，变身成美美哒的家庭装饰吧。</p>
+                            <div class="work-mes">
+                                    <span class="author">
+                                        <i class="iconfont icon-member"></i>
+                                        111111</span>
+                                    <span class=" collect">
+                                            <i class="iconfont icon-shoucang"></i>
+                                            
+                                        222</span>
+                                    <span class="comment">
+                                            <i class="iconfont icon-comment"></i>
+                                        777</span>
+                                    <span class="like">
+                                            <i class="iconfont icon-zu"></i>
+                                        888</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="work-pic">
+                            <img src="img/exhibition1.jpg" alt="exhibition"/>
+                        </div>
+                        <div class="work-intro">
+                            <div class="headline">
+                                <span class="work-tag">DIY教程</span>
+                                <a href="#" class="work-title"></a>
+                                <span class="work-date">2019-03-01</span>
+                            </div>
+                            <p class="work-content">手工制作金色吸管吊饰需要用到：废吸管、铁丝、跳环、钳子、尺子、剪刀、手喷漆、挂绳或者链子。如果你家里还有一些过期或者报废的吸管，通过这个方法进行废吸管化废为宝，让它们重新派上用场，变身成美美哒的家庭装饰吧。</p>
+                            <div class="work-mes">
+                                    <span class="author">
+                                        <i class="iconfont icon-member"></i>
+                                        111111</span>
+                                    <span class=" collect">
+                                            <i class="iconfont icon-shoucang"></i>
+                                            
+                                        222</span>
+                                    <span class="comment">
+                                            <i class="iconfont icon-comment"></i>
+                                        777</span>
+                                    <span class="like">
+                                            <i class="iconfont icon-zu"></i>
+                                        888</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="work-pic">
+                            <img src="img/exhibition1.jpg" alt="exhibition"/>
+                        </div>
+                        <div class="work-intro">
+                            <div class="headline">
+                                <span class="work-tag">DIY教程</span>
+                                <a href="#" class="work-title"></a>
+                                <span class="work-date">2019-03-01</span>
+                            </div>
+                            <p class="work-content">手工制作金色吸管吊饰需要用到：废吸管、铁丝、跳环、钳子、尺子、剪刀、手喷漆、挂绳或者链子。如果你家里还有一些过期或者报废的吸管，通过这个方法进行废吸管化废为宝，让它们重新派上用场，变身成美美哒的家庭装饰吧。</p>
+                            <div class="work-mes">
+                                    <span class="author">
+                                        <i class="iconfont icon-member"></i>
+                                        111111</span>
+                                    <span class=" collect">
+                                            <i class="iconfont icon-shoucang"></i>
+                                            
+                                        222</span>
+                                    <span class="comment">
+                                            <i class="iconfont icon-comment"></i>
+                                        777</span>
+                                    <span class="like">
+                                            <i class="iconfont icon-zu"></i>
+                                        888</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="work-pic">
+                            <img src="img/exhibition1.jpg" alt="exhibition"/>
+                        </div>
+                        <div class="work-intro">
+                            <div class="headline">
+                                <span class="work-tag">DIY教程</span>
+                                <a href="#" class="work-title"></a>
+                                <span class="work-date">2019-03-01</span>
+                            </div>
+                            <p class="work-content">手工制作金色吸管吊饰需要用到：废吸管、铁丝、跳环、钳子、尺子、剪刀、手喷漆、挂绳或者链子。如果你家里还有一些过期或者报废的吸管，通过这个方法进行废吸管化废为宝，让它们重新派上用场，变身成美美哒的家庭装饰吧。</p>
+                            <div class="work-mes">
+                                    <span class="author">
+                                        <i class="iconfont icon-member"></i>
+                                        111111</span>
+                                    <span class=" collect">
+                                            <i class="iconfont icon-shoucang"></i>
+                                            
+                                        222</span>
+                                    <span class="comment">
+                                            <i class="iconfont icon-comment"></i>
+                                        777</span>
+                                    <span class="like">
+                                            <i class="iconfont icon-zu"></i>
+                                        888</span>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="work-pic">
+                            <img src="img/exhibition1.jpg" alt="exhibition"/>
+                        </div>
+                        <div class="work-intro">
+                            <div class="headline">
+                                <span class="work-tag">DIY教程</span>
+                                <a href="#" class="work-title">手工制作金色吸管吊饰</a>
+                                <span class="work-date">2019-03-01</span>
+                            </div>
+                            <p class="work-content">手工制作金色吸管吊饰需要用到：废吸管、铁丝、跳环、钳子、尺子、剪刀、手喷漆、挂绳或者链子。如果你家里还有一些过期或者报废的吸管，通过这个方法进行废吸管化废为宝，让它们重新派上用场，变身成美美哒的家庭装饰吧。</p>
+                            <div class="work-mes">
+                                <span class="author">
+                                    <i class="iconfont icon-member"></i>
+                                    111111</span>
+                                <span class=" collect">
+                                        <i class="iconfont icon-shoucang"></i>
+                                        
+                                    222</span>
+                                <span class="comment">
+                                        <i class="iconfont icon-comment"></i>
+                                    777</span>
+                                <span class="like">
+                                        <i class="iconfont icon-zu"></i>
+                                    888</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="work">
+                        <div class="work-pic">
+                            <img src="img/exhibition1.jpg" alt="exhibition"/>
+                        </div>
+                        <div class="work-intro">
+                            <div class="headline">
+                                <span class="work-tag">DIY教程</span>
+                                <a href="#" class="work-title"></a>
+                                <span class="work-date">2019-03-01</span>
+                            </div>
+                            <p class="work-content">手工制作金色吸管吊饰需要用到：废吸管、铁丝、跳环、钳子、尺子、剪刀、手喷漆、挂绳或者链子。如果你家里还有一些过期或者报废的吸管，通过这个方法进行废吸管化废为宝，让它们重新派上用场，变身成美美哒的家庭装饰吧。</p>
+                            <div class="work-mes">
+                                    <div class="work-mes">
+                                            <span class="author">
+                                                <i class="iconfont icon-member"></i>
+                                                111111</span>
+                                            <span class=" collect">
+                                                    <i class="iconfont icon-shoucang"></i>
+                                                    
+                                                222</span>
+                                            <span class="comment">
+                                                    <i class="iconfont icon-comment"></i>
+                                                777</span>
+                                            <span class="like">
+                                                    <i class="iconfont icon-zu"></i>
+                                                888</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                    </div>
+                    </div>
+                    <ul id="pageNum">
+                        <li data-num="1">1</li>
+                        <li data-num="2">2</li>
+                        <li data-num="3">3</li>
+                        <li data-num="4">4</li>
+                        <li data-num="5">5</li>
+                    </ul>
+                </div>
+                <div class="pic">
+                    <ul class="show">
+                        <li><a href="#"><img src="img/exhibition2.jpg" alt=""></a></li>
+                        <li><a href="#"><img src="img/exhibition2.jpg" alt=""></a></li>
+                        <li><a href="#"><img src="img/exhibition2.jpg" alt=""></a></li>
+                        <li><a href="#"><img src="img/exhibition2.jpg" alt=""></a></li>
+                        <li><a href="#"><img src="img/exhibition2.jpg" alt=""></a></li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+     </main>
+    <!-- 下：产品信息+背景图片 -->
+    <footer></footer>
 </div>
-<script></script>
+    <script src="js/iconfont.js"></script>
+    <script src="js/ajax.js"></script>
+    <script src='http://mockjs.com/dist/mock.js'></script>
+    <!-- <script src="js/mock.js"></script> -->
+    <script src="js/index.js"></script>
+    <script src="js/home_rubbishSearch.js"></script>
+    <script src="js/home_recEssay.js"></script>
 </body>
 </html>

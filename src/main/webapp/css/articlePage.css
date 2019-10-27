@@ -447,3 +447,12 @@ nav ul li a{
 .face-click{
     display: block !important;
 }
+.article-op img{
+    width: 40px;
+    height: 40px;
+    float: right;
+    margin: 0 10px;
+}
+.article-op-wrap{
+    height: 30px;
+}

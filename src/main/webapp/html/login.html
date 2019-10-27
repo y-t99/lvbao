@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>GB login</title>
+    <link rel="stylesheet" href="../css/user.css" />
+    <style>
+      .register-wrap {
+        top: 100px;
+      }
+      .code-input {
+        display: inline-block;
+        width: 210px;
+        vertical-align: top;
+        margin-right: 34px;
+      }
+      .code-display {
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+      .code-display img {
+        width: 100px;
+        height: 50px;
+      }
+      .code-display a {
+        display: block;
+        font-size: 12px;
+        color: rgb(58, 102, 248);
+      }
+      #rememberPW {
+        width: 13px;
+        height: 13px;
+        margin: 0;
+        vertical-align: middle;
+        cursor: pointer;
+      }
+      label[for="rememberPW"] {
+        vertical-align: middle;
+        font-size: 14px;
+        margin-right: 126px;
+        cursor: pointer;
+      }
+
+      input#password {
+        letter-spacing: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 最外层 -->
+    <div class="register-wrap">
+      <span class="logo"></span>
+      <!-- 标题 -->
+      <p class="head-title">
+        用户登录
+      </p>
+      <!-- 表单 -->
+      <form action="">
+        <div class="form-group">
+          <input
+            type="text"
+            id="user"
+            placeholder="请输入用户名"
+            autocomplete="off"
+          />
+          <p id="userError"></p>
+        </div>
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            placeholder="请输入密码"
+            autocomplete="off"
+          />
+          <p id="passwordError"></p>
+        </div>
+        <div class="form-group">
+          <div class="code-input">
+            <input
+              type="text"
+              id="codeInput"
+              autocomplete="off"
+              placeholder="请输入验证码"
+            />
+            <p id="codeInputError"></p>
+          </div>
+          <div class="code-display">
+            <img src="http://localhost:8080/user?method=getVerifyCode" alt="验证码" id="codeImg" />
+            <a href="Javascript:;" id="changeCode">看不清，换一张</a>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="radio" data-checked="0" name="" id="rememberPW" />
+          <label for="rememberPW">记住密码</label>
+          <a href="register.html">注册新用户</a>
+          <a href="reset_pw.html">忘记密码</a>
+        </div>
+
+        <div class="form-group">
+          <input type="button" name="" id="submit" value="登录" />
+        </div>
+        <div class="form-group">
+          <a href="../index.html">返回首页</a>
+        </div>
+      </form>
+    </div>
+    <div id="result">
+      <p>
+        登录成功，正在去往首页..
+      </p>
+    </div>
+    <script src="../js/ajax.js"></script>
+    <script src="../js/user.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+    <script src="../js/mock.js"></script>
+    <script>
+      window.onload = function() {
+        //获取操作元素
+        let user = document.getElementById("user");
+        let userError = document.getElementById("userError");
+        let password = document.getElementById("password");
+        let passwordError = document.getElementById("passwordError");
+        let codeInput = document.getElementById("codeInput");
+        let codeInputError = document.getElementById("codeInputError");
+        let codeImg = document.getElementById("codeImg");
+        let changeCode=document.getElementById("changeCode");
+        let rememberPW = document.getElementById("rememberPW");
+        let submit = document.getElementById("submit");
+        let result = document.getElementById("result");
+
+        //iuput失焦时判断错误
+        errorTest(user, userError);
+        errorTest(password, passwordError);
+        errorTest(codeInput, codeInputError);
+        cancelChecked(rememberPW);
+         //点击发送请求
+        submit.onclick = function() {
+          let condition1 = ifEmpty(user.value, userError);
+          let condition2 = ifEmpty(password.value, passwordError);
+          let condition3 = ifEmpty(codeInput.value, codeInputError);
+          if (!condition1 && !condition2 && !condition3) {
+            //请求对象
+            let userMes = {
+              loginname: user.value,
+              loginpass: password.value,
+              verifyCode: codeInput.value
+            };
+            // post("https://www.test4.com", userMes,loginCallback);
+            post("http://localhost:8080/user?method=login", userMes,loginCallback);
+
+          }
+
+
+
+          /* 提交表单请求响应函数 */
+          function loginCallback(xhr) {
+           let xhrObj=JSON.parse(xhr);
+            if (xhrObj.code == 200) {
+              //跳转页面，提示登录成功
+              console.log("登录成功");
+              result.style.display="block";
+              let token = xhrObj.token;
+              window.sessionStorage.setItem('lvbao_token', token);
+              window.sessionStorage.setItem('lvbao_user', xhrObj.user.id);
+              setTimeout(function(){
+                window.location.href="http://localhost:8080/index.html";
+              },1000);
+            } else {
+              console.log(xhrObj.msg);
+            }
+          };
+
+        };
+
+        /* 点击切换验证码图片 */
+        changeCode.onclick=function(){
+          changeCodeImg();
+        };
+        function changeCodeImg(){
+          codeImg.src="http://localhost:8080/user?method=getVerifyCode"+"&"+Number(new Date());
+          console.log("changecodeimg");
+        };
+      };
+    </script>
+  </body>
+</html>
