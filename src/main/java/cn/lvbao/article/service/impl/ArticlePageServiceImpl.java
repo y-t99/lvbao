@@ -29,7 +29,7 @@ public class ArticlePageServiceImpl implements ArticlePageService {
     }
 
     @Override
-    public Result getAritcle(String id) {
+    public Result getAritcle(String id,String userID) {
         //查询数据库得到文章对象
         ArticleBean article=dao.findArticle(id);
         //把文章对象放到result中
@@ -38,6 +38,10 @@ public class ArticlePageServiceImpl implements ArticlePageService {
             result.setCode(ResultEnum.HAVE_MESSAGE.getCode());
             result.setData(article);
             result.setMsg("文章找寻成功");
+            if(userID!=null){//用户是否点过赞
+                boolean is=dao.isStar(userID,article.getId());
+                article.setStar(is);
+            }
         }else{
             result.setCode(ResultEnum.NO_MESSAGE.getCode());
             result.setMsg("没有找到相关文章");
@@ -46,7 +50,7 @@ public class ArticlePageServiceImpl implements ArticlePageService {
     }
 
     @Override
-    public Result<PageBean<ReviewBean>> getRecord(String id, PageBean<ReviewBean> pageBean, String condition) {
+    public Result<PageBean<ReviewBean>> getRecord(String id, PageBean<ReviewBean> pageBean, String condition,String userID) {
         //1、对PageBean页面信息进行补全
         fillPage(id, pageBean);
         //2、dao获取list
@@ -61,6 +65,13 @@ public class ArticlePageServiceImpl implements ArticlePageService {
             result.setCode(200);
             result.setMsg("留言数据返回");
             result.setData(pageBean);
+            if(userID!=null){
+                List<ReviewBean> li = result.getData().getList();
+                for(ReviewBean l:li){
+                    boolean is=dao.isRStar(userID,l.getId());
+                    l.setStar(is);
+                }
+            }
         }
         return result;
     }
@@ -79,9 +90,6 @@ public class ArticlePageServiceImpl implements ArticlePageService {
             }else if (starType.equals("reviewStar")){
                 dao.addReviewStar(id);//回复点赞加一
                 dao.saveReviewStarMsg(id, userID);//点赞回复和用户id绑定
-            }else if(starType.equals("replyStar")){
-                dao.addReplyStar(id);
-                dao.saveReplyStarMas(id,userID);
             }
             //3、点赞成功
             result.setCode(200);
@@ -101,6 +109,19 @@ public class ArticlePageServiceImpl implements ArticlePageService {
     @Override
     public void saveStarBand() {
         dao.saveStarBand();
+    }
+
+    @Override
+    public Result<Object> saveReview(String review,String user,String article) {
+        Result<Object> result;
+        try{
+            dao.saveReview(review,user,article);
+            result=new Result<>(ResultEnum.HAVE_MESSAGE,"评论成功");
+        }catch (Exception e){
+            e.printStackTrace();
+            result=new Result<>(ResultEnum.NO_MESSAGE,"评论失败");
+        }
+        return result;
     }
 
     private void fillPage(String id, PageBean<ReviewBean> pageBean) {

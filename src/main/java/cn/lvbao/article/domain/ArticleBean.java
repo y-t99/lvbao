@@ -45,6 +45,19 @@ public class ArticleBean {
      */
     private boolean star;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * id号
+     */
+    private String id;
+
     public boolean isStar() {
         return star;
     }

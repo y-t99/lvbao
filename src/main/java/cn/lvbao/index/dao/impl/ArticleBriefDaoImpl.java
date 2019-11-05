@@ -50,6 +50,11 @@ public class ArticleBriefDaoImpl extends BaseDao<ArticleBrief> implements  Artic
             sql+=" ORDER BY article_start DESC " +
                  " LIMIT ?,? ";
             maps = selectListToMap(sql, offset, pageBean.getRows());
+        }else if(ConditionEnum.Idea.equals(condition)){
+            sql+=" AND lvbao_article.article_typeID=? " +
+                " ORDER BY article_start DESC " +
+                " LIMIT ?,? ";
+            maps=selectListToMap(sql,pageBean.getCategory(),offset,pageBean.getRows());
         }
         //3、将列表map转为articleBrief
         return getList(maps);

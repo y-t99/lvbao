@@ -38,6 +38,20 @@ public class User {
      */
     private String activationCode;
 
+    /**
+     * 是否完善个人信息
+     * @return
+     */
+    private boolean isDetail;
+
+//    /**
+//     * 个人详细信息
+//     * @return
+//     */
+//    private Detail detail;
+
+
+
     public String getId() {
         return id;
     }
@@ -113,6 +127,13 @@ public class User {
                 ",activationCode="+activationCode+
                 "}";
     }
+
+
+    /*yt*/
+    /**
+     * 用户头像地址
+     */
+    private String portraitURI;
 
 }
 

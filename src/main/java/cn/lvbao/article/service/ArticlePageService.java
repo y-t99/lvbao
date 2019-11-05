@@ -16,11 +16,11 @@ public interface ArticlePageService {
     /**
      *根据文章id查询文章并封装文章到result中
      */
-    Result getAritcle(String id);
+    Result getAritcle(String id,String userID);
     /**
      *根据文章id查找评论
      */
-    Result<PageBean<ReviewBean>> getRecord(String id, PageBean<ReviewBean> pageBean, String condition);
+    Result<PageBean<ReviewBean>> getRecord(String id, PageBean<ReviewBean> pageBean, String condition,String userID);
 
     /**
      * 点赞
@@ -39,4 +39,11 @@ public interface ArticlePageService {
      * 保存点赞数表
      */
     void saveStarBand();
+
+    /**
+     * 保存评论
+     * @param review
+     * @return
+     */
+    Result<Object> saveReview(String review,String user,String article);
 }

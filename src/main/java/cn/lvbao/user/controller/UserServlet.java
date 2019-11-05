@@ -38,8 +38,6 @@ public class UserServlet extends BaseServlet {
         Result result = userService.regist(json,request.getSession());
         //3、注册结果返回前端
         request.setAttribute("result", result);
-
-        System.out.println(result);
     }
 
     public void activate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

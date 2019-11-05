@@ -31,6 +31,7 @@ public class HotWordServlet extends BaseServlet{
         jedis.close();
         //把榜单内容封装到result中
         List<String> list=new ArrayList<>(hotwords);
+        System.out.println("hotwordServlet");
         Result result=new Result(ResultEnum.HAVE_MESSAGE,list.size(),list);
         req.setAttribute("result",result);
         super.doPost(req, resp);

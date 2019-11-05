@@ -59,9 +59,8 @@ public class UserDaoImpl implements UserDao {
             Map<String,Object> userMap= template.queryForMap(sql, name);
             return mapToBean(userMap);
         }catch (Exception e){
-            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
 
@@ -161,26 +160,6 @@ public class UserDaoImpl implements UserDao {
         user.setEmail((String)userMap.get("email"));
         user.setActivationCode((String)userMap.get("activationCode"));
         return user;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    public void f( ){
-        String sql="";
-        try{
-            template.update(sql);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
     }
 
 }

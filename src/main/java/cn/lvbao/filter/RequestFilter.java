@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.lang.reflect.Proxy;
 
 /**
  * @author lvbao

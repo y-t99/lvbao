@@ -128,6 +128,45 @@
             <artifactId>mail</artifactId>
             <version>1.4.7</version>
         </dependency>
+        <!--&lt;!&ndash;WEB-INF下的lib依赖迁移&ndash;&gt;-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/commons-logging/commons-logging &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>commons-logging</groupId>-->
+            <!--<artifactId>commons-logging</artifactId>-->
+            <!--<version>1.1.1</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-jdbc &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-jdbc</artifactId>-->
+            <!--<version>5.1.5.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.elasticsearch.client/elasticsearch-rest-high-level-client &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.elasticsearch.client</groupId>-->
+            <!--<artifactId>elasticsearch-rest-high-level-client</artifactId>-->
+            <!--<version>7.2.0</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-orm &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-orm</artifactId>-->
+            <!--<version>5.1.5.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-core &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-core</artifactId>-->
+            <!--<version>5.1.5.RELEASE</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.springframework/spring-tx &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework</groupId>-->
+            <!--<artifactId>spring-tx</artifactId>-->
+            <!--<version>5.1.5.RELEASE</version>-->
+        <!--</dependency>-->
+
+
         <!--owsap.es-->
         <dependency>
             <groupId>org.owasp.esapi</groupId>

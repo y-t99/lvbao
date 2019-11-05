@@ -38,6 +38,8 @@ public class PageServiceImpl implements PageService {
             list= dao.findListByCondition(pageBean, ConditionEnum.TIME);
         }else if ("start".equals(condition)){
             list= dao.findListByCondition(pageBean, ConditionEnum.Start);
+        }else if("category".equals(condition)){
+            list=dao.findListByCondition(pageBean,ConditionEnum.Idea);
         }
         pageBean.setList(list);
         //3、page写好存到result中

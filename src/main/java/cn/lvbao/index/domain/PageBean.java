@@ -24,9 +24,13 @@ public class PageBean <T>{
      */
     private int rows;
     /**
-     * 记录数
+     * 记录
      */
     private List<T> list;
+    /**
+     * 分类
+     */
+    private String category;
 
     public int getTotalCount() {
         return totalCount;
@@ -76,6 +80,14 @@ public class PageBean <T>{
                 ", currentPage=" + currentPage +
                 ", rows=" + rows +
                 ", list=" + list +
+                ", category='" + category + '\'' +
                 '}';
+    }
+
+    public String getCategory() {
+        return category;
+    }
+    public void setCategory(String category){
+        this.category=category;
     }
 }

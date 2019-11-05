@@ -6,7 +6,8 @@ package cn.lvbao.index.ienum;
  */
 public enum ConditionEnum {
     TIME("time"),
-    Start("start");
+    Start("start"),
+    Idea("idea");
     private String condition;
     ConditionEnum(String condition){
         this.condition=condition;

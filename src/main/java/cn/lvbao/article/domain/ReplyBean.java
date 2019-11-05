@@ -8,7 +8,7 @@ import java.sql.Timestamp;
  */
 public class ReplyBean {
     /**
-     * 人物名
+     * 评论人名
      */
     private String master;
     /**
@@ -23,7 +23,6 @@ public class ReplyBean {
      * 点赞
      */
     private int start;
-
     /**
      * 是否点赞过
      */

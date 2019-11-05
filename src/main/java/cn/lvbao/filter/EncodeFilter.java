@@ -2,7 +2,6 @@ package cn.lvbao.filter;
 
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class EncodeFilter implements Filter {
         String pathInfo = ((HttpServletRequest) servletRequest).getRequestURI();
         if(pathInfo.contains("css") ){
             ((HttpServletResponse) servletResponse).setContentType("text/css;charset=UTF-8");
-        }else if(!(pathInfo.contains("html")|| pathInfo.contains("js"))) {
+        }else if(!(pathInfo.contains("html")|| pathInfo.contains("js") || pathInfo.contains("video"))) {
             ((HttpServletResponse) servletResponse).setContentType("application/json;charset=UTF-8");
         } else{
             ((HttpServletResponse) servletResponse).setContentType("text/html;charset=UTF-8");

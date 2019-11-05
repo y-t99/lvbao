@@ -6,7 +6,9 @@ import cn.lvbao.article.domain.ReplyBean;
 import cn.lvbao.article.domain.ReviewBean;
 import cn.lvbao.index.dao.BaseDao;
 import cn.lvbao.index.domain.PageBean;
+import cn.lvbao.util.CommonUtils;
 
+import javax.rmi.CORBA.Util;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,10 +40,6 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
      *  用户id    list<回复id>
      */
     public static Map<String,List<String>> reviewStarBand=new HashMap<>();
-
-    public static Map<String,Integer> replyStarCount=new HashMap<>();
-
-    public static Map<String,List<String>> replyStarBand=new HashMap<>();
 
     private static ArticleDaoImpl ARTICLE_DAO;
     static {
@@ -77,6 +75,7 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
         }
         //2、封装文章
         ArticleBean article=new ArticleBean();
+        article.setId((String) map.get("article_id"));
         article.setTitle((String) map.get("article_title"));
         article.setFrom((String) map.get("article_from"));
         article.setClick((Integer) map.get("article_click"));
@@ -103,7 +102,6 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
         String sql=" SELECT  *,lvbao_review.id FROM lvbao_review,lvbao_user " +
                 " WHERE lvbao_review.review_masterID=lvbao_user.id " +
                 " AND lvbao_review.review_articleID=? ";
-        System.out.println(condition);
         if(condition!=null && condition.equals("start")){
             sql+=" ORDER BY lvbao_review.review_start DESC " +
                 " LIMIT ?,? ";
@@ -116,6 +114,45 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
         //3、封装maps
         List<ReviewBean> list=fillList(maps);
         return list;
+    }
+
+    @Override
+    public boolean isStar(String userID, String id) {
+        String sql="SELECT count(*) FROM lvbao_star " +
+                " WHERE articleID=? and userID=? ";
+        return isStar(articleStarBand,userID,id,sql);
+
+    }
+
+    @Override
+    public boolean isRStar(String userID, String id) {
+        String sql="SELECT count(*) FROM lvbao_rostar " +
+                " WHERE reviewID=? and userID=? ";
+        return isStar(reviewStarBand,userID,id,sql);
+    }
+
+    @Override
+    public void saveReview(String review, String user,String article) {
+        /*评论id、文章id、发送人id、评论内容*/
+        String sql="INSERT INTO lvbao_review(id,review_articleID,review_masterID,review_comment) VALUES(?,?,?,?)";
+        update(sql, CommonUtils.uuid(),article,user,review);
+    }
+
+    private boolean isStar(Map<String,List<String>>map,String userID,String id,String sql){
+        //1、现在缓存中查找
+        if(map.containsKey(userID)){
+            List<String> list=map.get(userID);
+            boolean is = list.contains(id);
+            if(is){//包含
+                return true;
+            }
+        }
+        //2、到数据库中查找
+        int count = getCount(sql, id, userID);
+        if(count==1){
+            return true;
+        }
+        return false;
     }
 //---------------------------------------点赞---------------------------------------------//
 
@@ -160,10 +197,6 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
     public void addReviewStar(String reviewID) {
         addCount(reviewID,reviewStarCount);
     }
-    @Override
-    public void addReplyStar(String replyID) {
-        addCount(replyID,replyStarCount);
-    }
 
     @Override
     public void saveArticleStarMsg(String articleID, String userID) {
@@ -175,12 +208,6 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
     public void saveReviewStarMsg(String reviewID, String userID) {
         addBand(reviewID, userID,reviewStarBand);
     }
-
-    @Override
-    public void saveReplyStarMas(String replyID, String userID) {
-        addBand(replyID,userID,replyStarBand);
-    }
-
 
     //------------------------------结束保存缓存数据------------------------------------------//
     @Override
@@ -199,6 +226,16 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
             //3、跟新数量
             update(sql,n,key);
         }
+
+        String revSql="UPDATE lvbao_review SET review_start=? " +
+                " WHERE id=? ";
+        String revNum="SELECT review_start FROM lvbao_review " +
+                " WHERE id=? ";
+        for(String key:reviewStarCount.keySet()){
+            map=selectOneToMap(revNum,key);
+            n=(Integer) map.get("review_start")+reviewStarCount.get(key);
+            update(revSql,n,key);
+        }
     }
 
     @Override
@@ -208,6 +245,13 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
         for(String key:articleStarBand.keySet()){
             for(String articleID:articleStarBand.get(key)){
                 update(sql,articleID,key);
+            }
+        }
+        //遍历绑定表,将userID和lvbao_review 中的id保存到
+        String revSql="INSERT INTO lvbao_rostar values(?,?)";
+        for(String key:reviewStarBand.keySet()){
+            for(String reviewID:reviewStarBand.get(key)){
+                update(revSql,reviewID,key);
             }
         }
     }
@@ -226,11 +270,15 @@ public class ArticleDaoImpl extends BaseDao<ArticleBean> implements ArticleDao {
         ReviewBean reviewBean;
         for(Map<String,Object> map:maps){
             reviewBean=new ReviewBean();
+            reviewBean.setId((String)map.get("id"));//id号
             reviewBean.setMaster((String) map.get("loginname"));//名字
             reviewBean.setContent((String) map.get("review_comment"));//内容
             reviewBean.setSdTime((Timestamp) map.get("review_sdTime"));//时间
-            reviewBean.setStart((Integer) map.get("review_start"));//点赞
             reviewBean.setReplys((Integer) map.get("review_replys"));//回复
+            reviewBean.setStart((Integer) map.get("review_start"));//点赞
+            if(reviewStarCount.containsKey(reviewBean.getId())){
+                reviewBean.setStart(reviewBean.getStart()+reviewStarCount.get(reviewBean.getId()));
+            }
             List<ReplyBean> children=getReplysList((String)map.get("id"));
             reviewBean.setList(children);
             list.add(reviewBean);

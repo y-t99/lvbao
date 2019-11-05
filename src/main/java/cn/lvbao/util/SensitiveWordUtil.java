@@ -1,6 +1,9 @@
-package yt.sensitiveWord;
+package cn.lvbao.util;
 
-import java.io.Reader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,6 +29,17 @@ public class SensitiveWordUtil {
      */
     static {
         Set<String> keywords = new HashSet<>();
+        InputStream inputStream = SensitiveWordUtil.class.getClassLoader().getResourceAsStream("敏感词库大全.txt");
+        BufferedReader reader=new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+
+        try {
+            while(((line=reader.readLine())!=null)){
+                keywords.add(line);
+            }
+        } catch (IOException e) {
+        }
+
         addSensitiveWordToHashTree(keywords);
     }
     /**
@@ -94,19 +108,17 @@ public class SensitiveWordUtil {
      */
     public static String replaceSensitiveWord(String text,String safeWord){
         StringBuilder sb=new StringBuilder(text);
-        for(int i=0;i<sb.length();i++){
-            int wordLength= checkSensitiveWord(text, i);
-            if(wordLength!=0){
-                sb.replace(i,i+wordLength,safeWord);
-                i+=safeWord.length();
+        try {
+            for (int i = 0; i < sb.length(); i++) {
+                int wordLength = checkSensitiveWord(sb.toString(), i);
+                if (wordLength != 0) {
+                    sb.replace(i, i + wordLength, safeWord);
+                    i += (safeWord.length()-1);
+                }
             }
+        }catch (IndexOutOfBoundsException e){
+            return sb.toString();
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        String text="日本鬼子,日本人,你们这群sb";
-        text=replaceSensitiveWord(text,"[和谐]");
-        System.out.println(text);
     }
 }

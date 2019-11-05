@@ -71,6 +71,26 @@ public interface ArticleDao {
      */
     void saveReviewStarMsg(String reviewID, String userID);
 
-    void addReplyStar(String replyID);
-    void saveReplyStarMas(String replyID,String userID);
+    /**
+     * 判断用户是否点赞过文章
+     * @param userID
+     * @param id
+     * @return
+     */
+    boolean isStar(String userID, String id);
+
+    /**
+     * 判断用户是否点赞过回复
+     * @param userID
+     * @param id
+     * @return
+     */
+    boolean isRStar(String userID, String id);
+
+    /**
+     * 保存评论
+     * @param review
+     * @param user
+     */
+    void saveReview(String review, String user,String article);
 }

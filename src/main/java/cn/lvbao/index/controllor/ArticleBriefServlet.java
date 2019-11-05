@@ -26,8 +26,9 @@ public class ArticleBriefServlet extends BaseServlet{
         JSONObject json= (JSONObject) req.getAttribute("requestBody");
         //1、拿到page信息
         PageBean<ArticleBrief> pageBean = getPage(json);
+        pageBean.setCategory((String) json.get("category"));
         //2、把信息交给pageService,得到result
-        Result result= (Result) service.getArticleBriefs(pageBean, (String) json.get("condition"));
+        Result result= service.getArticleBriefs(pageBean, (String) json.get("condition"));
         //3、把result存到req中
         req.setAttribute("result",result);
         super.doPost(req, resp);

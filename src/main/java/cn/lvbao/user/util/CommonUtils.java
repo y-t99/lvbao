@@ -46,10 +46,9 @@ public class CommonUtils {
     }
 
     public static void main(String[] args) {
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("name","zhs" );
-        User u1=toBean(map, User.class);
-        System.out.println(u1);
+        for(int i=0;i<10;i++){
+            System.out.println(getRandomString());
+        }
     }
 }
 
