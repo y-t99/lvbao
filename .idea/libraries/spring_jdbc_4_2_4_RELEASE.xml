@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="spring-jdbc-4.2.4.RELEASE">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/spring-jdbc-4.2.4.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+    <jarDirectory url="jar://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/spring-jdbc-4.2.4.RELEASE.jar!/" recursive="false" />
+  </library>
+</component>
