@@ -45,6 +45,27 @@ public class ArticleBean {
      */
     private boolean star;
 
+    /**
+     * 文章id号
+     */
+    private String id;
+
+    /**
+     * 作者id
+     */
+    private String masterID;
+
+    /**
+     * 封面图路径
+     *
+     */
+    private String imgURL;
+
+    /**
+     * 简介
+     */
+    private String brief;
+
     public String getId() {
         return id;
     }
@@ -52,11 +73,6 @@ public class ArticleBean {
     public void setId(String id) {
         this.id = id;
     }
-
-    /**
-     * id号
-     */
-    private String id;
 
     public boolean isStar() {
         return star;
@@ -128,5 +144,29 @@ public class ArticleBean {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getMasterID() {
+        return masterID;
+    }
+
+    public void setMasterID(String masterID) {
+        this.masterID = masterID;
+    }
+
+    public String getImgURL() {
+        return imgURL;
+    }
+
+    public void setImgURL(String imgURL) {
+        this.imgURL = imgURL;
+    }
+
+    public String getBrief() {
+        return brief;
+    }
+
+    public void setBrief(String brief) {
+        this.brief = brief;
     }
 }
