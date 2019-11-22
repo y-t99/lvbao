@@ -1,6 +1,7 @@
 package cn.lvbao.idea.controller;
 
 import cn.lvbao.domain.Result;
+import cn.lvbao.percenter.domain.LoadMoreResult;
 import com.alibaba.fastjson.JSONObject;
 
 import javax.servlet.ServletException;
@@ -26,7 +27,12 @@ public class BaseServlet extends HttpServlet {
             e.printStackTrace();
         }
         //1、取出Result对象
-        Result result = (Result) req.getAttribute("result");
+        System.out.println(req.getAttribute("result").getClass().getName());
+//        if (req.getAttribute("result").getClass().getName().equals("LoadMoreResult")){
+//            LoadMoreResult result = (LoadMoreResult)req.getAttribute("result");
+//        } else {
+            Result result = (Result) req.getAttribute("result");
+//        }
         PrintWriter out = resp.getWriter();
         if (result != null) {
             //2、把Result对象转换成json对象发给前端

@@ -25,16 +25,19 @@ public class IsLoginServlet extends BaseServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("login");
         JSONObject json= (JSONObject) req.getAttribute("requestBody");
         Result<User> result;
         try {
             Claims claims = JjwtUtils.parseJWT((String) json.get("token"));
+            System.out.println(claims);
             if(claims!=null){
                 result=new Result(ResultEnum.HAVE_MESSAGE,"用户登录过");
                 result.setData(users.get(json.get("id")));
             }else{
                 throw new RuntimeException();
             }
+            System.out.println(result);
         } catch (Exception e) {
             result=new Result(ResultEnum.NO_MESSAGE,"用户为登录过");
         }

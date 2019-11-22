@@ -44,6 +44,11 @@ public class User {
      */
     private boolean isDetail;
 
+    /**
+     * 用户头像地址
+     */
+    private String portraitURI;
+
 //    /**
 //     * 个人详细信息
 //     * @return
@@ -116,24 +121,28 @@ public class User {
         this.activationCode = activationCode;
     }
 
-    @Override
-    public String toString(){
-        return "User{id="+id+
-                ",loginname="+loginname+
-                ",loginpass="+loginpass+
-                ",repass="+repass+
-                ",status="+status+
-                ",email="+email+
-                ",activationCode="+activationCode+
-                "}";
+    public String getPortraitURI() {
+        return portraitURI;
     }
 
+    public void setPortraitURI(String portraitURI) {
+        this.portraitURI = portraitURI;
+    }
 
-    /*yt*/
-    /**
-     * 用户头像地址
-     */
-    private String portraitURI;
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", loginname='" + loginname + '\'' +
+                ", loginpass='" + loginpass + '\'' +
+                ", repass='" + repass + '\'' +
+                ", status=" + status +
+                ", email='" + email + '\'' +
+                ", verifyCode='" + verifyCode + '\'' +
+                ", activationCode='" + activationCode + '\'' +
+                ", isDetail=" + isDetail +
+                ", portraitURI='" + portraitURI + '\'' +
+                '}';
+    }
 }
 

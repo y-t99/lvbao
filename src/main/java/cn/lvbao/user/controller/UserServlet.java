@@ -76,8 +76,6 @@ public class UserServlet extends BaseServlet {
         Result result = userService.sendModifyPwdMail(json,request.getSession());
         //3、返回结果
         request.setAttribute("result", result);
-
-        System.out.println(result);
     }
 
     public void checkMailCodeServlet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,8 +85,6 @@ public class UserServlet extends BaseServlet {
         Result result = userService.checkMailVeriCode(json,request.getSession());
         //3、返回结果对象
         request.setAttribute("result", result);
-
-        System.out.println(result);
     }
 
     public void modifyPass(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -98,7 +94,6 @@ public class UserServlet extends BaseServlet {
         Result result = userService.modifyPass(json,request.getSession());
         //3、返回结果对象
         request.setAttribute("result", result);
-        System.out.println(result);
     }
 
 }

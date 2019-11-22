@@ -1,5 +1,6 @@
 package cn.lvbao.user.dao.impl;
 
+import cn.lvbao.percenter.domain.PerInforBean;
 import cn.lvbao.user.dao.UserDao;
 import cn.lvbao.user.domain.User;
 import cn.lvbao.util.JDBCUtils;
@@ -144,6 +145,12 @@ public class UserDaoImpl implements UserDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public void fileUserInfor(User user) {
+        String sql="INSERT INTO lvbao_perinfor (user_id,infor_headurl) values (?,?)";
+        template.update(sql,user.getId(), user.getPortraitURI());
     }
 
     /**

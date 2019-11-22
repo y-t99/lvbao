@@ -1,8 +1,10 @@
 package cn.lvbao.idea.service;
 
+import cn.lvbao.article.domain.ArticleBean;
 import cn.lvbao.domain.Result;
 import cn.lvbao.idea.domain.CategoryBean;
 import cn.lvbao.idea.domain.VideoBean;
+import com.alibaba.fastjson.JSONObject;
 
 import java.util.List;
 
@@ -23,5 +25,12 @@ public interface IdeaService {
      * @return
      */
     Result<List<CategoryBean>> getCategory();
+
+    /**
+     * 发布作品
+     * @param json
+     * @return
+     */
+    Result issueArticle(JSONObject json);
 }
 

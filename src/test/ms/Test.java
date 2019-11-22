@@ -1,5 +1,6 @@
 package ms;
 
+import cn.lvbao.code.ResultEnum;
 import cn.lvbao.domain.Result;
 import cn.lvbao.idea.dao.IdeaDao;
 import cn.lvbao.idea.dao.impl.IdeaDaoImpl;
@@ -7,6 +8,9 @@ import cn.lvbao.idea.domain.CategoryBean;
 import cn.lvbao.idea.domain.VideoBean;
 import cn.lvbao.idea.service.IdeaService;
 import cn.lvbao.idea.service.impl.IdeaServiceImpl;
+import cn.lvbao.percenter.domain.*;
+import cn.lvbao.percenter.service.PerCenterService;
+import cn.lvbao.percenter.service.impl.PerCenterServiceImpl;
 import cn.lvbao.user.dao.DaoFactory;
 import cn.lvbao.user.dao.UserDao;
 import cn.lvbao.user.domain.User;
@@ -14,7 +18,15 @@ import cn.lvbao.util.CommonUtils;
 import cn.lvbao.util.JDBCUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -89,40 +101,79 @@ public class Test {
     }
 
     @org.junit.Test
-    public void test2(){
-        JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
-
-        List<VideoBean> videoList = new ArrayList<VideoBean>();
-        //1、查询
-        String sql="SELECT * FROM lvbao_video";
-        List<Map<String,Object>> videos=template.queryForList(sql);
-        //2、将查询所得map列表转化为bean列表
-        for(Map<String,Object> map:videos){
-            VideoBean videoBean = new VideoBean();
-            videoBean.setVideoId((String)map.get("video_id"));
-            videoBean.setVideoUrl((String)map.get("video_url"));
-            videoList.add(videoBean);
-        }
-        //3、返回结果
-        System.out.println(videoList);
+    public void test2() throws IOException {
+        System.out.println(CommonUtils.uuid());
+        System.out.println(CommonUtils.uuid());
     }
 
     @org.junit.Test
-    public void test3(){
-        JdbcTemplate template=new JdbcTemplate(JDBCUtils.getPool());
-
-        List<VideoBean> videoList = new ArrayList<VideoBean>();
-        //1、查询
-        String sql="SELECT * FROM lvbao_video";
-        List<Map<String,Object>> videos=template.queryForList(sql);
-        //2、将查询所得map列表转化为bean列表
-        for(Map<String,Object> map:videos){
-            VideoBean videoBean = new VideoBean();
-            videoBean.setVideoId((String)map.get("video_id"));
-            videoBean.setVideoUrl((String)map.get("video_url"));
-            videoList.add(videoBean);
-        }
-        System.out.println(videoList);
-        //3、返回结果
+    public void test3() throws IOException {
+        String imgPath = "E:\\uploadFileTest\\h123.jpg";
+        BufferedImage image = ImageIO.read(new FileInputStream(imgPath));
+        System.out.println(image);
     }
+
+
+
+
+    @org.junit.Test
+    public void test4(){
+        JdbcTemplate template = new JdbcTemplate(JDBCUtils.getPool());
+        String sql="UPDATE lvbao_perinfor SET infor_headurl=? WHERE user_id=?";
+        template.update(sql,"686259A9546F4B7B92CF79AD280587CF", "321");
+    }
+
+    @org.junit.Test
+    public void test5(){
+        JdbcTemplate template = new JdbcTemplate(JDBCUtils.getPool());
+        String sql="SELECT t.article_id,t.user_id,a.article_title,a.article_brief,DATE(t.skim_time) as skim_day,t.skim_time FROM lvbao_article AS a,lvbao_trace AS t WHERE t.user_id='09828FA672CB4E7EBDBC30A18FFC9014' AND a.article_id=t.article_id ORDER BY skim_time DESC " +
+                "LIMIT 15";
+            List<Map<String,Object>> traceMaps=template.queryForList(sql);
+            List<TraceBean> traces = new ArrayList<TraceBean>();
+            //map转化为实体类
+            for(Map map:traceMaps) {
+                TraceBean traceBean = mapToTrace(map);
+                traces.add(traceBean);
+            }
+
+            List<DailyRecordBean<TraceBean>> list = new ArrayList<>();
+            int i=0;
+            while(i<traces.size()){
+                Date day=traces.get(i).getSkimDay();
+                DailyRecordBean<TraceBean> dailyRecordBean = new DailyRecordBean<>();
+                dailyRecordBean.setRecords(new ArrayList<>());
+                int j=i;
+                while (j<traces.size()&&traces.get(j).getSkimDay().equals(day)){
+                    dailyRecordBean.getRecords().add(traces.get(j++));
+                }
+                i=j;
+                dailyRecordBean.setDate(day);
+                list.add(dailyRecordBean);
+            }
+        for (DailyRecordBean d:list){
+            System.out.println(d.getDate()+":");
+            System.out.println(d.getRecords());
+        }
+    }
+
+        private TraceBean mapToTrace(Map map){
+            TraceBean trace = new TraceBean();
+            trace.setArticleID((String)map.get("article_id"));
+            trace.setArticleTitle((String)map.get("article_title"));
+            trace.setBrief((String) map.get("article_brief"));
+            trace.setSkimTime((Timestamp) map.get("skim_time"));
+            trace.setUserID((String)map.get("user_id"));
+            trace.setSkimDay((Date)map.get("skim_day"));
+            return trace;
+        }
+
+        @org.junit.Test
+        public void test6(){
+
+        }
+
+        @org.junit.Test
+        public void test7(){
+
+        }
 }

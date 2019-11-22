@@ -1,5 +1,6 @@
 package cn.lvbao.user.dao;
 
+import cn.lvbao.percenter.domain.PerInforBean;
 import cn.lvbao.user.domain.User;
 
 /**
@@ -55,5 +56,11 @@ public interface UserDao {
      * @return
      */
     boolean isExist(String name);
+
+    /**
+     * 新用户个人中心资料建档，存放默认头像
+     * @param user
+     */
+    void fileUserInfor(User user);
 }
 

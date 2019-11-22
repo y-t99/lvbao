@@ -1,5 +1,6 @@
 package cn.lvbao.idea.dao.impl;
 
+import cn.lvbao.article.domain.ArticleBean;
 import cn.lvbao.idea.dao.IdeaDao;
 import cn.lvbao.idea.domain.CategoryBean;
 import cn.lvbao.idea.domain.VideoBean;
@@ -88,6 +89,25 @@ public class IdeaDaoImpl implements IdeaDao {
             typeList.add(categoryBean);
         }
         return typeList;
+    }
+
+    @Override
+    public boolean addArticle(ArticleBean article) {
+        System.out.println("addArticle");
+        //发布的文章类型为默认分类
+        String sql="INSERT lvbao_article " +
+                "(article_id,article_masterID,article_from,article_title,article_content,article_start,article_click,article_brief,article_imgURI,article_typeID,article_sdTime) " +
+                "VALUES (?,?,?,?,?,0,0,?,?,'5CEBB9127DC14D25A1A328A508DC5624',null)";
+        try {
+            template.update(sql, article.getId(),
+                    article.getMasterID(), article.getFrom(),
+                    article.getTitle(), article.getContent(),
+                    article.getBrief(), article.getImgURL());
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }
 

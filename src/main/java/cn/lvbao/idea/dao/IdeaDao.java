@@ -1,5 +1,6 @@
 package cn.lvbao.idea.dao;
 
+import cn.lvbao.article.domain.ArticleBean;
 import cn.lvbao.idea.domain.CategoryBean;
 import cn.lvbao.idea.domain.VideoBean;
 
@@ -35,5 +36,12 @@ public interface IdeaDao {
      * @return
      */
     List<CategoryBean> getTypes();
+
+    /**
+     * 添加文章
+     * @param articleBean
+     * @return
+     */
+    boolean addArticle(ArticleBean articleBean);
 }
 

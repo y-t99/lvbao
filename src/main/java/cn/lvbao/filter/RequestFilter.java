@@ -23,22 +23,34 @@ public class RequestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        // 1、读取json字符串
-        BufferedReader br = request.getReader();
-        String buffer;
-        StringBuilder jsonBuilder = new StringBuilder();
-        while ((buffer = br.readLine()) != null) {
-            jsonBuilder.append(buffer);
+        //1、获取content type截取形式字符串
+        String type=null;
+        if (request.getContentType()!=null){
+            type=request.getContentType().split(";",2)[0];
         }
-        System.out.println("requestfilter-json:"+jsonBuilder);
-        // 2、将JSONObject对象存进request
-        if (jsonBuilder.length() > 0) {
-            //把json字符串改为json对象
-            JSONObject json = JSONObject.parseObject(jsonBuilder.toString());
-            request.setAttribute("requestBody", json);
+        //2、判断请求是否包含文件
+        if("multipart/form-data".equals(type)){
+            //3、如果有数据请求（非网页资源请求）且包含文件则放行
+            System.out.println("包含文件");
+            filterChain.doFilter(servletRequest, servletResponse);
+        } else{
+            // 4、读取json字符串
+            BufferedReader br = request.getReader();
+            String buffer;
+            StringBuilder jsonBuilder = new StringBuilder();
+            while ((buffer = br.readLine()) != null) {
+                jsonBuilder.append(buffer);
+            }
+            System.out.println("requestfilter-json:"+jsonBuilder);
+            // 5、将JSONObject对象存进request
+            if (jsonBuilder.length() > 0) {
+                //把json字符串改为json对象
+                JSONObject json = JSONObject.parseObject(jsonBuilder.toString());
+                request.setAttribute("requestBody", json);
+            }
+            //6、放行
+            filterChain.doFilter(servletRequest, servletResponse);
         }
-        //3、放行
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

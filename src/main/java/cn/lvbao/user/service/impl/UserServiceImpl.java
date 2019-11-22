@@ -1,9 +1,12 @@
 package cn.lvbao.user.service.impl;
 
 import cn.lvbao.controllor.IsLoginServlet;
+import cn.lvbao.percenter.dao.PerCenterDao;
+import cn.lvbao.percenter.dao.impl.PerCenterDaoImpl;
+import cn.lvbao.percenter.domain.PerInforBean;
+import cn.lvbao.percenter.service.PerCenterService;
 import cn.lvbao.user.dao.DaoFactory;
 import cn.lvbao.user.dao.UserDao;
-import cn.lvbao.user.dao.impl.UserDaoImpl;
 import cn.lvbao.user.domain.Result;
 import cn.lvbao.user.domain.User;
 import cn.lvbao.user.service.UserService;
@@ -12,6 +15,8 @@ import cn.lvbao.user.util.MailUtils;
 import cn.lvbao.user.util.VerifyCodeUtils;
 import cn.lvbao.util.JjwtUtils;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.bcel.generic.NEW;
+
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
@@ -23,6 +28,7 @@ import java.awt.image.BufferedImage;
  */
 public class UserServiceImpl implements UserService {
     private UserDao userDao = DaoFactory.getUserDao();
+    private PerCenterDao perCenterDao=new PerCenterDaoImpl();
     private String activateMail1=
             "<html><head></head><body>" +
             "<h1>这是一封激活邮件,激活请点击以下链接</h1>" +
@@ -86,9 +92,13 @@ public class UserServiceImpl implements UserService {
         }else {
             //4、修改用户状态为1（激活）
             userDao.updateStatus(user.getId(), 1);
+            //5、在个人中心为新用户建档（默认头像）
+            String defaultHead="img\\userImg\\640.png";
+            user.setPortraitURI(defaultHead);
+            userDao.fileUserInfor(user);
             actiResult = new Result(200, "激活成功！快去登录吧！");
         }
-        //5、返回结果
+        //6、返回结果
         return actiResult;
     }
 
@@ -116,6 +126,8 @@ public class UserServiceImpl implements UserService {
                 result.setToken(token);
                 //保存用户信息
                 IsLoginServlet.users.put(realUser.getId(),realUser);
+                PerInforBean bean = perCenterDao.queryPerInfor(realUser.getId());
+                realUser.setPortraitURI(bean.getHeadUrl());
             } catch (Exception e) {
                 e.printStackTrace();
             }

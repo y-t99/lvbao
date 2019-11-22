@@ -44,7 +44,7 @@ public class Result {
 
     @Override
     public String toString() {
-        return "Result{code="+code+
+        return "LoadMoreResult{code="+code+
                 ",msg="+msg+
                 ",user="+user+
                 "}";
